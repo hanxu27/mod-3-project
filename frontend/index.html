@@ -1,5 +1,6 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html> -->
 <html lang="en" dir="ltr">
+
 
 <head>
   <meta charset="utf-8">
@@ -8,7 +9,7 @@
   <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
   <title>Volley Ball Thing</title>
 
-  <script src='index.js'></script>
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -26,7 +27,17 @@
     <canvas id="canvas">asdf</canvas>
   </div>
 
+  
+      <form hidden id="form">
+      <input hidden type="text" name="coords" value="etest">
+      <input type="radio" name="outcome" value="point"> point<br>
+      <input type="radio" name="outcome" value="error"> error<br>
+      <input type="radio" name="outcome" value="pass"> pass<br>
+      <input type="number" name="number" placeholder=" Player Number"><br>
+      <input type="submit">
+    </form>
+  
   <script src='arrow.js'></script>
+  <script src='index.js'></script>
 </body>
-
 </html>
