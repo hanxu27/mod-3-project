@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  game: one
+  player: one
+  myplayer: one
+  type: 
+  outcome: MyString
+  start_x: 1.5
+  start_y: 1.5
+  end_x: 1.5
+  end_y: 1.5
+
+two:
+  game: two
+  player: two
+  myplayer: two
+  type: 
+  outcome: MyString
+  start_x: 1.5
+  start_y: 1.5
+  end_x: 1.5
+  end_y: 1.5

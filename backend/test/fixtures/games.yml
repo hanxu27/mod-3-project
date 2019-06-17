@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  team1: MyString
+  team2: MyString
+  date: 2019-06-16 19:00:53
+  tournament: MyString
+  match: MyString
+
+two:
+  team1: MyString
+  team2: MyString
+  date: 2019-06-16 19:00:53
+  tournament: MyString
+  match: MyString
