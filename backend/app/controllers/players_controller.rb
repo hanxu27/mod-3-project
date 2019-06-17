@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PlayersController < ApplicationController
   def index
     @players = Player.all
@@ -18,18 +20,6 @@ class PlayersController < ApplicationController
     end
   end
 
-  def playerServes; end
-
-  def playerAces; end
-
-  def playerNonAces; end
-
-  def playerSpikes; end
-
-  def playerKills; end
-
-  def playerNonKills; end
-
   def update
     @player = Player.find(params[:id])
     if @player.update
@@ -45,6 +35,40 @@ class PlayersController < ApplicationController
     @actions.destroy_all
     @player.destroy
     render json: @player, status: :ok
+  end
+
+  def serves
+    @player = Player.find(params[:id])
+    render json: @player.selectAction('serve', nil), status: :ok
+  end
+
+  def aces
+    @player = Player.find(params[:id])
+    render json: @player.selectAction('serve', 'point'), status: :ok
+  end
+
+  def nonaces
+    @player = Player.find(params[:id])
+    @output = @player.selectAction('serve', 'pass')
+    @output += @player.selectAction('serve', 'error')
+    render json: @output, status: :ok
+  end
+
+  def spikes
+    @player = Player.find(params[:id])
+    render json: @player.selectAction('spike', nil), status: :ok
+  end
+
+  def kills
+    @player = Player.find(params[:id])
+    render json: @player.selectAction('serve', 'point'), status: :ok
+  end
+
+  def nonkills
+    @player = Player.find(params[:id])
+    @output = @player.selectAction('spike', 'pass')
+    @output += @player.selectAction('spike', 'error')
+    render json: @output, status: :ok
   end
 
   private
