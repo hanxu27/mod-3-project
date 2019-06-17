@@ -1,0 +1,13 @@
+#canvas {
+	display: block;
+	width: 80%;
+	height: 50%;
+	background-image: url("assets/vb-court.png");
+	background-size: 100% 100%;
+}
+
+#court {
+	display: block;
+	position: absolute;
+	margin: 25% 0 0 25%;
+}
