@@ -1,56 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
-	// HTML ELEMENTS
-	const canvasTag = document.getElementById('canvas')
-	var canvas = new createjs.Stage("canvas");
 
-	// VARIABLES
+	let canvasTag = document.getElementById('canvas')
+	canvasTag.width = 1000;
+	canvasTag.height = 700;
+
 	const xOffset = canvasTag.getBoundingClientRect().x
 	const yOffset = canvasTag.getBoundingClientRect().y
 
-	let starting_click = true
+	let canvas = new createjs.Stage("canvas");
 
-	let startX = 0
-	let startY = 0
 
-	let endX = 0
-	let endY = 0
+	canvasTag.addEventListener('mousedown', startArrow)
+	canvasTag.addEventListener("mouseup", function(e){ canvas.onmousemove = null });
 
-	// MAIN
-	// canvasTag.addEventListener('click', handleCourtClick)
+	function startArrow(e) {
+		
 
-	//											//
-	// FUNCTION DEFINITIONS //
-	//											//
-	function handleCourtClick(e) {
-		if(starting_click) {
-			starting_click = !starting_click
-			startX = e.clientX// - xOffset
-			startY = e.clientY// - yOffset
-		}
-		else {
-			starting_click = !starting_click
-			endX = e.clientX// - xOffset
-			endY = e.clientY// - yOffset
-			log_coords()
-			paintArrow()
-		}
+		canvas.onmousemove = function(e) {
+			console.log('moving...')
+    }
+
+		console.log(canvas)
+		console.log(e.clientX)
+    let rect = new createjs.Shape();
+    rect.graphics.beginFill('red');
+    rect.graphics.drawRect(e.clientX-xOffset,e.clientY-yOffset, 10, 50,180);
+    rect.graphics.endFill();
+
+
+    canvas.addChild(rect);
+    canvas.update();
 	}
-
-	function log_coords() {
-		console.log('====================')
-		console.log('startX = ', startX)
-		console.log('startY = ', startY)
-		console.log('endX = ', endX)
-		console.log('endY = ', endY)
-		console.log('====================')
-	}
-
-	function paintArrow() {
-		//
-	}
-
-
-
 
 
 

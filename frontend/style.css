@@ -1,7 +1,8 @@
 #canvas {
 	display: block;
-	width: 80%;
-	height: 50%;
+	position: absolute;
+	bottom: 2em;
+	left: 2em;
 	background-image: url("assets/vb-court.png");
 	background-size: 100% 100%;
 }
@@ -10,4 +11,13 @@
 	display: block;
 	position: absolute;
 	margin: 25% 0 0 25%;
+}
+
+#form {
+	display: inline;
+	position: absolute;
+	z-index: 1;
+	padding: 0.50em;
+	border: 0.10em solid black;
+	background-color: white;
 }
