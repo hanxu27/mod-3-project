@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
 	let canvasTag = document.getElementById('canvas')
-	canvasTag.width = 1000;
-	canvasTag.height = 700;
+	// canvasTag.width = 2000;
+	// canvasTag.height = 1000;
 
 	const xOffset = canvasTag.getBoundingClientRect().x
 	const yOffset = canvasTag.getBoundingClientRect().y

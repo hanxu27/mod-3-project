@@ -12,18 +12,27 @@
     <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
   </head>
   <body>
+    <script src='navbar.js'></script>
+
     <form hidden id="form">
-      <input hidden type="text" name="coords" value="etest">
+      <input hidden type="text" name="coords">
       <input type="radio" name="outcome" value="point"> point<br>
-      <input type="radio" name="outcome" value="error"> error<br>
       <input type="radio" name="outcome" value="pass"> pass<br>
+      <input type="radio" name="outcome" value="error"> error<br>
       <input type="number" name="number" placeholder=" Player Number"><br>
       <input type="submit">
     </form>
 
-    <div id="form-div">
-      <canvas id="canvas">asdf</canvas>
-    </div>
+    <canvas id="canvas"></canvas>
+
+     <footer class="page-footer font-small blue">
+
+  <div class="footer-copyright text-center py-3">
+    © 2018 Copyright:
+    <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+  </div>
+
+</footer>
 
      <script src='arrow.js'></script>
   </body>
