@@ -7,9 +7,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Action.destroy_all
 Game.destroy_all
 Player.destroy_all
-Action.destroy_all
 
 g1 = Game.create(team1: 'red', team2: 'blue', date: DateTime.now, tournament: 'AAU', match: 'group A', game: 1, score: '25-21')
 g2 = Game.create(team1: 'red', team2: 'blue', date: DateTime.now, tournament: 'AAU', match: 'group A', game: 2, score: '20-25')
