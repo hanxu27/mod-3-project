@@ -1,17 +1,13 @@
-#canvas {
+/*#canvas {
 	display: block;
-	position: absolute;
-	bottom: 2em;
-	left: 2em;
+	width: 90%;
 	background-image: url("assets/vb-court.png");
-	background-size: 100% 100%;
-}
-
-#court {
-	display: block;
-	position: absolute;
-	margin: 25% 0 0 25%;
-}
+	background-size: 95%;
+	background-color: rgb(0, 114, 191);
+	margin: auto;
+	background-repeat: no-repeat;
+	background-position: center center;
+}*/
 
 #overlay {
   position: fixed; /* Sit on top of the page content */
@@ -29,7 +25,6 @@
   cursor: pointer; /* Add a pointer on hover */
 
 #form {
-	display: inline;
 	position: absolute;
 	z-index: 1;
 	padding: 0.50em;

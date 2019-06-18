@@ -1,13 +1,13 @@
 const form = document.getElementById('form')
-form.on('submit' createAction)
+form.addEventListener('submit', createAction)
 let canvas = document.getElementById('canvas')
-canvas.width = 1000;
-canvas.height = 700;
-// canvas.style.width = "1000px";
-// canvas.style.height = "700px";
 
 let stage = new createjs.Stage("canvas");
-let arrowSize = 10;
+stage.canvas.width = 800
+stage.canvas.height = 400
+console.log(stage.canvas.width)
+console.log(stage.canvas.height)
+let arrowSize = 5;
 
 function drawArrow(arrow, length, frequency) {
   arrow.graphics.clear().s("red").mt(0,0);
@@ -66,10 +66,15 @@ stage.on("stagemousedown", function(e) {
 
 // ----------------------------------------------------------------------------------------
 
+
+function constructForm() {
+
+}
+
 function createAction(e) {
   e.preventDefault()
   form.hidden = true
-  // fetch('http:')
+  fetch('http://localhost:3000/actions')
 }
 
 
