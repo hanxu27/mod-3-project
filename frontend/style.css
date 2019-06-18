@@ -9,6 +9,12 @@
 	background-position: center center;
 }*/
 
+#action-bar {
+	width: 70%;
+	margin: auto;
+	border: 0.10em solid black;
+}
+
 #overlay {
   position: fixed; /* Sit on top of the page content */
   display: show; /* show at start */
@@ -24,6 +30,10 @@
   z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
   cursor: pointer; /* Add a pointer on hover */
 }
+
+/*#konva-container {
+	background-color: green;
+}*/
 
 #form {
 	position: absolute;
