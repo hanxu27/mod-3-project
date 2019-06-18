@@ -1,11 +1,12 @@
-// VARIABLES
+// HTML ELEMENTS
+const form = document.getElementById('form')
 let stage = new Konva.Stage({
   container: 'konva-container',
   width: 1000,
   height: 700
 })
-const div = document.getElementById('konva-container').firstElementChild
-const form = document.getElementById('form')
+
+// VARIABLES
 let first_click = true
 let startX = 0
 let startY = 0
@@ -17,15 +18,19 @@ stage.addEventListener('click', handleStageClick)
 form.addEventListener('submit', createAction)
 
 // MAIN
+// Konva.pixelRatio = 1;
 let court = new Image();
 court.src = 'assets/vb-court.png';
-court.onload = () => renderCourt()
+court.onload = () => {
+  renderCourt()
+  const div = document.getElementById('konva-container').firstElementChild
+}
 
 //                      //
 // FUNCTION DEFINITIONS //
 //                      //
 function handleStageClick(e) {
-  console.log(e.pageX)
+  // console.log(e.offsetY)
   if(first_click) {
     if(form.hidden === false) {
       form.hidden = true
@@ -34,14 +39,14 @@ function handleStageClick(e) {
     }
     else {
       first_click = !first_click
-      startX = e.pageX
-      startY = e.pageY
+      startX = e.offsetX
+      startY = e.offsetY
     }
   }
   else {
     first_click = !first_click
-    endX = e.pageX
-    endY = e.pageY
+    endX = e.offsetX
+    endY = e.offsetY
     drawArrow(startX, startY, endX, endY)
     showForm(e)
   }
@@ -54,24 +59,25 @@ function showForm(e) {
   form.style.left = e.clientX
 }
 
-function createAction() {
-
+function createAction(e) {
+  e.preventDefault()
+  // fetch here...
+  form.reset()
+  form.hidden = true
 }
 
 function renderCourt() {
   let layer = new Konva.Layer()
   let img = new Konva.Image({ image: court })
-  // add the shape to the layer
   layer.add(img)
-  // add the layer to the stage
   stage.add(layer)
 }
 
 function drawArrow(startX, startY, endX, endY) {
   let layer = new Konva.Layer()
   let arrow = new Konva.Arrow({
-    x: -78,
-    y: -58,
+    // x: -78,
+    // y: -58,
     points: [startX, startY, endX, endY],
     pointerLength: 10,
     pointerWidth: 10,
@@ -79,8 +85,6 @@ function drawArrow(startX, startY, endX, endY) {
     stroke: 'black',
     strokeWidth: 5
   })
-  // add the shape to the layer
   layer.add(arrow)
-  // add the layer to the stage
   stage.add(layer)
 }
