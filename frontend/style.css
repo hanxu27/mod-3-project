@@ -1,4 +1,4 @@
-#canvas {
+/*#canvas {
 	display: block;
 	width: 90%;
 	background-image: url("assets/vb-court.png");
@@ -7,7 +7,7 @@
 	margin: auto;
 	background-repeat: no-repeat;
 	background-position: center center;
-}
+}*/
 
 #form {
 	position: absolute;
@@ -15,10 +15,4 @@
 	padding: 0.50em;
 	border: 0.10em solid black;
 	background-color: white;
-}
-
-#footer {
-	width: 100%;
-	position: absolute;
-	bottom: 0;
 }
