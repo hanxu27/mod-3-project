@@ -10,10 +10,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="https://unpkg.com/konva@3.3.3/konva.min.js"></script>
   </head>
   <body>
     <script src='navbar.js'></script>
-
+    
     <form hidden id="form">
       <input hidden type="text" name="coords">
       <input type="radio" name="outcome" value="point"> point<br>
@@ -23,17 +24,13 @@
       <input type="submit">
     </form>
 
-    <canvas id="canvas"></canvas>
+    <div align="center" id="konva-container"></div>
 
-     <footer class="page-footer font-small blue">
+    <footer id="footer">
+      <div class="card-footer text-muted">2 days ago</div>
+    </footer>
 
-  <div class="footer-copyright text-center py-3">
-    © 2018 Copyright:
-    <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
-  </div>
-
-</footer>
-
-     <script src='arrow.js'></script>
+    <script src='action-arrow.js'></script>
+    <!-- <script src='arrow.js'></script> -->
   </body>
 </html>

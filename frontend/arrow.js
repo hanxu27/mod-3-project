@@ -3,12 +3,11 @@ form.addEventListener('submit', createAction)
 let canvas = document.getElementById('canvas')
 
 let stage = new createjs.Stage("canvas");
-// stage.canvas.width = 150
+stage.canvas.width = 800
+stage.canvas.height = 400
 console.log(stage.canvas.width)
 console.log(stage.canvas.height)
-console.log(canvas.width)
-console.log(canvas.height)
-let arrowSize = 10;
+let arrowSize = 5;
 
 function drawArrow(arrow, length, frequency) {
   arrow.graphics.clear().s("red").mt(0,0);
