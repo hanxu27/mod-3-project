@@ -64,7 +64,6 @@ let serves = [
 const form = document.getElementById('form')
 const actionBar = document.getElementById('action-bar')
 let active_action = actionBar.firstElementChild.firstElementChild.firstElementChild
-let canvasDiv // global definition
 
 let stage = new Konva.Stage({
   container: 'konva-container',
@@ -73,12 +72,12 @@ let stage = new Konva.Stage({
 })
 
 // VARIABLES //
+let working_layer = new Konva.Layer()
 let first_click = true
 let startX = 0
 let startY = 0
 let endX = 0
 let endY = 0
-let working_layer = new Konva.Layer()
 
 // EVENTS //
 document.addEventListener('click', handleClick)
@@ -90,15 +89,12 @@ console.log('=== JS START ===')
 // Konva.pixelRatio = 1;
 let court = new Image();
 court.src = 'assets/vb-court.png';
-court.onload = () => {
-  renderCourt()
-  canvasDiv = document.getElementById('konva-container').firstElementChild
-}
+court.onload = () => renderCourt()
 
 // ============================== FUNCTION DEFINITIONS ============================== //
 
 function handleClick(e) {
-  console.log(stage)
+  console.log(working_layer)
 
   if(e.target.className === 'nav-link') showActions(e.target)
   // else if (e.target.id === 'new-game') newGame()
@@ -112,18 +108,19 @@ function showActions(action) {
   for(let k = max; k > 0; k--)
     layers[k].remove()
 
+  working_layer = new Konva.Layer()
   let layer = new Konva.Layer()
 
   if(action.innerText === 'Serves')
     serves.forEach(serve => layer.add(drawArrow(serve.start_x, serve.start_y, serve.end_x, serve.end_y)) )
   else if(action.innerText === 'Spikes') 
     spikes.forEach(spike => layer.add(drawArrow(spike.start_x, spike.start_y, spike.end_x, spike.end_y)) )
+  
+  stage.add(layer)
 
   active_action.className = 'nav-link'
   action.className = 'nav-link active'
   active_action = action
-  working_layer = new Konva.Layer()
-  stage.add(layer)
 }
 
 function handleStageClick(e) {
@@ -131,7 +128,8 @@ function handleStageClick(e) {
     if(form.hidden === false) {
       form.hidden = true
       form.reset()
-      div.lastElementChild.remove()
+      working_layer.children[working_layer.children.length-1].remove()
+      stage.add(working_layer)
     }
     else {
       first_click = !first_click
