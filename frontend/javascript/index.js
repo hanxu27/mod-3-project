@@ -84,7 +84,7 @@ document.addEventListener('click', handleClick)
 stage.addEventListener('click', handleStageClick)
 form.addEventListener('submit', createAction)
 
-// MAIN
+// MAIN //
 console.log('=== JS START ===')
 // Konva.pixelRatio = 1;
 let court = new Image();
@@ -94,7 +94,7 @@ court.onload = () => renderCourt()
 // ============================== FUNCTION DEFINITIONS ============================== //
 
 function handleClick(e) {
-  console.log(working_layer)
+  // console.log(e.target)
 
   if(e.target.className === 'nav-link') showActions(e.target)
   // else if (e.target.id === 'new-game') newGame()
