@@ -19,6 +19,10 @@
 	background-color: green;
 }*/
 
+button:focus {
+	outline:0;
+}
+
 #action-form {
 	position: absolute;
 	z-index: 1;

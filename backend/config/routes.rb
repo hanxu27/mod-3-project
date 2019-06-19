@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get 'games/:gameId/players/:id/serve_errors', to: 'games#player_serve_errors'
   get 'games/:gameId/players/:id/spike_errors', to: 'games#player_spike_errors'
 
+  get 'games/:gameId/team/:id/actions', to: 'games#team_actions'
   get 'games/:gameId/team/:id/serves', to: 'games#team_serves'
   get 'games/:gameId/team/:id/aces', to: 'games#team_aces'
   get 'games/:gameId/team/:id/spikes', to: 'games#team_spikes'
