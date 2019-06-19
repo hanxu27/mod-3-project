@@ -18,6 +18,9 @@ const spikesBtn = document.getElementById('spikes-btn')
 let active_action = spikesBtn
 
 // VARIABLES //
+let currentGameId = 0
+let currentTeam1 = ''
+let currentTeam2 = ''
 let serves = []
 let spikes = []
 let working_layer = new Konva.Layer()
@@ -54,128 +57,12 @@ function handleClick(e) {
   if (e.target.tagName === 'CANVAS') handleStageClick(e)
   else if (e.target.parentElement.id === 'action-bar') renderActions(e.target)
   else if (e.target.id === 'new-game') newGameDiv.hidden ? showNewGameForm() : hideNewGameForm()
-  else if (e.target.id === 'form-sub') createGame(e)
   else if (e.target.id === 'new-player') newPlayer()
   else if (e.target.id === 'player-cancel') hideNewPlayerForm()
   else if (e.target.id === 'form-back') hideNewGameForm(e)
 }
 
-function newPlayer() {
-  newPlayerDiv.hidden = false
-}
-
-function hideNewPlayerForm() {
-  newPlayerForm.reset()
-  newPlayerDiv.hidden = true
-}
-
-function createPlayer(e) {
-  let newPlayer = { name: newPlayerForm.querySelector('#player-name').value, number: newPlayerForm.querySelector('#player-number').value, team: newPlayerForm.querySelector('#player-team').value, position: newPlayerForm.querySelector('#player-position').value }
-  console.log(newPlayer);
-  fetch(URL_PLAYERS, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
-    },
-    body: JSON.stringify({ player: newPlayer })
-  }).then(res => res.json())
-    .then(res => {
-      hideNewPlayerForm()
-      console.log(res)
-    })
-}
-
-function hideNewGameForm() {
-  newGameDiv.hidden = true
-  newGameForm.reset()
-}
-
-function showNewGameForm() {
-  newGameDiv.hidden = false
-  let today = new Date()
-  today = today.toISOString()
-  date.value = today.split('T')[0]
-}
-
-function createNewGame(e) {
-  e.preventDefault()
-  const t1 = newGameForm.querySelector('#team1').value
-  const t2 = newGameForm.querySelector('#team2').value
-  const da = newGameForm.querySelector('#date').value
-  const tour = newGameForm.querySelector('#tournament').value
-  const ma = newGameForm.querySelector('#match').value
-  const ga = newGameForm.querySelector('#game').value
-  let newGame = { team1: t1, team2: t2, date: da, tournament: tour, match: ma, game: ga }
-  fetch(URL_GAMES, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
-    },
-    body: JSON.stringify({ game: newGame })
-  })
-    .then(res => res.json())
-    .then(console.log)
-    .then(hideNewGameForm())
-}
-
-function handleStageClick(e) {
-  if (first_click) {
-    if (actionForm.hidden === false) {
-      actionForm.hidden = true
-      actionForm.reset()
-      working_layer.children[working_layer.children.length - 1].remove()
-      stage.add(working_layer)
-    }
-    else {
-      first_click = !first_click
-      startX = e.offsetX
-      startY = e.offsetY
-    }
-  }
-  else {
-    first_click = !first_click
-    endX = e.offsetX
-    endY = e.offsetY
-    working_layer.add(drawArrow(startX, startY, endX, endY))
-    stage.add(working_layer)
-    showActionForm(e)
-  }
-}
-
-function showActionForm(e) {
-  actionForm.hidden = false
-  actionForm.coords.value = `${startX}-${startY}-${endX}-${endY}`
-  actionForm.style.top = e.pageY
-  actionForm.style.left = e.pageX
-}
-
-function createAction(e) {
-  e.preventDefault()
-  // fetch here...
-  actionForm.reset()
-  actionForm.hidden = true
-}
-
-function renderCourt() {
-  let layer = new Konva.Layer()
-  let img = new Konva.Image({ image: court })
-  layer.add(img)
-  stage.add(layer)
-}
-
-function drawArrow(startX, startY, endX, endY, color = 'black') {
-  return new Konva.Arrow({
-    points: [startX, startY, endX, endY],
-    pointerLength: 10,
-    pointerWidth: 10,
-    fill: color,
-    stroke: color,
-    strokeWidth: 5
-  })
-}
-
+// FOR NAVBAR LOAD GAMES //
 function fetchGames() {
   fetch(URL_GAMES)
     .then(res => res.json())
@@ -193,8 +80,11 @@ function gameToString(game) {
   loadGame.append(link)
 }
 
+// AFTER LOAD GAME SELECTED FETCH ACTIONS FROM THAT GAME// 
 function fetchGameActions(e) {
   const game_url = URL_GAMES + `/${e.target.dataset.gameId}/actions`
+  serves = []
+  spikes = []
   fetch(game_url)
     .then(res => res.json())
     .then(populateLocalArrays)

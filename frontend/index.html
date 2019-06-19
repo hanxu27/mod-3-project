@@ -25,10 +25,8 @@
 <body>
   <script src='javascript/navbar.js'></script>
 
-  <div align="center" id="konva-container"></div>
-
   <div hidden id="new-game-div">
-    <form id="new-game-form" novalidate>
+    <form id="new-game-form">
       <div class="form-group">
         <div class='row'>
           <div class="col-md-4">
@@ -73,8 +71,6 @@
     <hr>
   </div>
 
-  <br>
-
   <div hidden id="new-player-div">
     <form id="new-player-form">
       <div class="form-group">
@@ -103,6 +99,8 @@
     </form>
   </div>
 
+  <div align="center" id="konva-container"></div>
+
   <form id="action-form" hidden>
     <input hidden type="text" name="coords">
     <input type="radio" name="outcome" value="point"> point<br>
@@ -114,12 +112,17 @@
 
   <footer class="bg-light card-footer text-muted fixed-bottom">
     <!-- © Copyright 2020 Fancy Bois, LLC -->
-    <div id="action-bar" class="row">
-      <button id="serves-btn" class="col md-2">Serves</button>
-      <button id="spikes-btn" class="col md-2">Spikes</button>
+    <div id="action-bar" class="row justify-content-md-center">
+      <button id="serves-btn">Serves</button>
+      <button id="spikes-btn">Spikes</button>
+      <button id="toggle-team-btn" class="col-1 btn-secondary">Teams</button>
+      <button id="toggle-actions-btn" class="col-1 btn-success">Actions</button>
+      <button id="toggle-outcome-btn" class="col-1 btn-warning">Outcomes</button>
     </div>
   </footer>
-
+  <script src="javascript/new-action.js"></script>
+  <script src="javascript/new-game-form.js"></script>
+  <script src="javascript/new-player-form.js"></script>
   <script src='javascript/index.js'></script>
 </body>
 
