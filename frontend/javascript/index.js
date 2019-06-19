@@ -6,6 +6,7 @@ let active_action = actionBar.firstElementChild.firstElementChild.firstElementCh
 const newGameDiv = document.querySelector('#new-game-div')
 const newGameForm = document.querySelector('#new-game-form')
 const dateField = document.querySelector('#date')
+const loadGame = document.querySelector('#loadGamesDropdown')
 
 // VARIABLES //
 let working_layer = new Konva.Layer()
@@ -95,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   ]
   // SEED DATA END //
-
+  fetchGames()
   // END //
 })
 
@@ -219,4 +220,26 @@ function drawArrow(startX, startY, endX, endY, color = 'black') {
   })
 }
 
+function fetchGames() {
+  fetch(URL_GAMES)
+    .then(res => res.json())
+    .then(games => games.forEach(gameToString))
+}
 
+function gameToString(game) {
+  const gameString = `${game.date} ${game.tournament} ${game.match} ${game.game} ${game.team1} vs ${game.team2}`
+  let link = document.createElement('a')
+  link.className = "dropdown-item"
+  link.href = "#"
+  link.innerText = gameString
+  link.dataset.gameId = game.id
+  link.addEventListener('click', fetchGameActions)
+  loadGame.append(link)
+}
+
+function fetchGameActions(e) {
+  const game_url = URL_GAMES + `/${e.target.dataset.gameId}/actions`
+  fetch(game_url)
+    .then(res => res.json())
+    .then(console.log)
+}
