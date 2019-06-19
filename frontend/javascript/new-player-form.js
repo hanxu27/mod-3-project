@@ -1,8 +1,8 @@
-function newPlayer() {
+function showNewPlayerForm() {
   newPlayerDiv.hidden = false
 }
 
-function hideNewPlayerForm() {
+function hideNewPlayerform() {
   newPlayerForm.reset()
   newPlayerDiv.hidden = true
 }

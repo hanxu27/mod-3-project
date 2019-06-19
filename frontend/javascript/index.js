@@ -21,6 +21,7 @@ let active_action = spikesBtn
 let currentGameId = 0
 let currentTeam1 = ''
 let currentTeam2 = ''
+let currentPlayers = { team1: [], team2: [] }
 let serves = []
 let spikes = []
 let working_layer = new Konva.Layer()
@@ -57,7 +58,7 @@ function handleClick(e) {
   if (e.target.tagName === 'CANVAS') handleStageClick(e)
   else if (e.target.parentElement.id === 'action-bar') renderActions(e.target)
   else if (e.target.id === 'new-game') newGameDiv.hidden ? showNewGameForm() : hideNewGameForm()
-  else if (e.target.id === 'new-player') newPlayer()
+  else if (e.target.id === 'new-player') newPlayerDiv.hidden ? showNewPlayerForm() : hideNewPlayerform()
   else if (e.target.id === 'player-cancel') hideNewPlayerForm()
   else if (e.target.id === 'form-back') hideNewGameForm(e)
 }
@@ -83,11 +84,13 @@ function gameToString(game) {
 // AFTER LOAD GAME SELECTED FETCH ACTIONS FROM THAT GAME// 
 function fetchGameActions(e) {
   const game_url = URL_GAMES + `/${e.target.dataset.gameId}/actions`
+  const players_url = URL_GAMES + `/${e.target.dataset.gameId}/players`
   serves = []
   spikes = []
   fetch(game_url)
     .then(res => res.json())
     .then(populateLocalArrays)
+  fetch(players_url)
 }
 
 function populateLocalArrays(actions) {
