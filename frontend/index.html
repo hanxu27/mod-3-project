@@ -16,7 +16,7 @@
 <body>
   <script src='javascript/navbar.js'></script>
   <div hidden id="new-game-div">
-    <form>
+    <form id="new-game-form">
       <div class="form-group">
         <div class='row'>
           <div class="col-md-4">
@@ -28,8 +28,8 @@
             <input type="text" class="form-control" id="team2" placeholder="Enter Team" required>
           </div>
           <div class="col-md-4">
-            <label for="date">Date</label>
-            <input type="datetime-local" class="form-control" id="date" required>
+            <label for="date" value="${today}">Date</label>
+            <input type="date" class="form-control" id="date" required>
           </div>
         </div>
         <div class='row'>

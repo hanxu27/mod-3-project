@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2019_06_16_230554) do
   create_table "games", force: :cascade do |t|
     t.string "team1"
     t.string "team2"
-    t.datetime "date"
+    t.date "date"
     t.string "tournament"
     t.string "match"
     t.integer "game"
