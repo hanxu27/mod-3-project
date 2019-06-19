@@ -1,3 +1,9 @@
+
+// URLS //
+const URL_BASE = 'http://localhost:3000/'
+const URL_GAMES = URL_BASE + `games`
+const URL_PLAYERS = URL_BASE + `players`
+
 // HTML ELEMENTS //
 const actionForm = document.getElementById('action-form')
 const actionBar = document.getElementById('action-bar')
@@ -5,9 +11,11 @@ let active_action = actionBar.firstElementChild.firstElementChild.firstElementCh
 const newGameDiv = document.querySelector('#new-game-div')
 const newGameForm = document.querySelector('#new-game-form')
 const dateField = document.querySelector('#date')
+const loadGame = document.querySelector('#loadGamesDropdown')
+const newPlayerDiv = document.querySelector('#new-player-div')
+const newPlayerForm = document.querySelector('#new-player-form')
 
 // VARIABLES //
-const URL_GAMES = `http://localhost:3000/games`
 let working_layer = new Konva.Layer()
 let first_click = true
 let startX = 0
@@ -22,86 +30,56 @@ let stage = new Konva.Stage({
 
 // EVENTS //
 document.addEventListener('click', handleClick)
-newGameForm.addEventListener('submit', createNewGame)
 actionForm.addEventListener('submit', createAction)
+newGameForm.addEventListener('submit', createNewGame)
+newPlayerForm.addEventListener('submit', createPlayer)
 
 // MAIN //
 console.log('=== JS START ===')
 // Konva.pixelRatio = 1;
+fetchGames()
 court = new Image();
 court.src = 'assets/vb-court.png';
 court.onload = () => renderCourt()
-
-  
-// SEED DATA //
-let spikes = [
-  {
-    "id": 1,
-    "game_id": 1,
-    "player_id": 1,
-    "actionType": "serve",
-    "outcome": "score",
-    "start_x": 400.0,
-    "start_y": 400.0,
-    "end_x": 600.0,
-    "end_y": 540.0,
-    "created_at": "2019-06-17T13:14:23.952Z",
-    "updated_at": "2019-06-17T13:14:23.952Z"
-  },
-  {
-    "id": 2,
-    "game_id": 1,
-    "player_id": 1,
-    "actionType": "serve",
-    "outcome": "score",
-    "start_x": 400.0,
-    "start_y": 250.0,
-    "end_x": 600.0,
-    "end_y": 550.0,
-    "created_at": "2019-06-17T13:14:23.952Z",
-    "updated_at": "2019-06-17T13:14:23.952Z"
-  },
-]
-let serves = [
-  {
-    "id": 1,
-    "game_id": 1,
-    "player_id": 1,
-    "actionType": "serve",
-    "outcome": "pass",
-    "start_x": 10.0,
-    "start_y": 500.0,
-    "end_x": 800.0,
-    "end_y": 150.0,
-    "created_at": "2019-06-17T13:14:23.952Z",
-    "updated_at": "2019-06-17T13:14:23.952Z"
-  },
-  {
-    "id": 2,
-    "game_id": 1,
-    "player_id": 1,
-    "actionType": "serve",
-    "outcome": "score",
-    "start_x": 10.0,
-    "start_y": 250.0,
-    "end_x": 600.0,
-    "end_y": 300.0,
-    "created_at": "2019-06-17T13:14:23.952Z",
-    "updated_at": "2019-06-17T13:14:23.952Z"
-  },
-]
-// SEED DATA END //
-
 
 // ============================== FUNCTION DEFINITIONS ============================== //
 
 function handleClick(e) {
   // console.log(e.target.tagName)
-
+  
   if(e.target.tagName === 'CANVAS') handleStageClick(e)
   else if (e.target.id === 'new-game') newGameDiv.hidden ? showNewGameForm() : hideNewGameForm()
-  else if (e.target.id === 'form-back') hideNewGameForm(e)
+  else if (e.target.id === 'form-sub') createGame(e)
   else if (e.target.className === 'action nav-link') renderActions(e.target)
+  else if (e.target.id === 'new-player') newPlayer()
+  else if (e.target.id === 'player-cancel') hideNewPlayerForm()
+  else if (e.target.id === 'form-back') hideNewGameForm(e)
+}
+
+function newPlayer() {
+  newPlayerDiv.hidden = false
+}
+
+function hideNewPlayerForm() {
+  newPlayerForm.reset()
+  newPlayerDiv.hidden = true
+}
+
+function createPlayer(e) {
+  let newPlayer = { name: newPlayerForm.querySelector('#player-name').value, number: newPlayerForm.querySelector('#player-number').value, team: newPlayerForm.querySelector('#player-team').value, position: newPlayerForm.querySelector('#player-position').value }
+  console.log(newPlayer);
+  fetch(URL_PLAYERS, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify({ player: newPlayer })
+  }).then(res => res.json())
+    .then(res => {
+      hideNewPlayerForm()
+      console.log(res)
+    })
 }
 
 function hideNewGameForm() {
@@ -125,7 +103,6 @@ function createNewGame(e) {
   const ma = newGameForm.querySelector('#match').value
   const ga = newGameForm.querySelector('#game').value
   let newGame = { team1: t1, team2: t2, date: da, tournament: tour, match: ma, game: ga }
-  console.log(newGame);
   fetch(URL_GAMES, {
     method: 'POST',
     headers: {
@@ -215,4 +192,28 @@ function drawArrow(startX, startY, endX, endY, color = 'black') {
     stroke: color,
     strokeWidth: 5
   })
+}
+
+function fetchGames() {
+  fetch(URL_GAMES)
+    .then(res => res.json())
+    .then(games => games.forEach(gameToString))
+}
+
+function gameToString(game) {
+  const gameString = `${game.date} ${game.tournament} ${game.match} ${game.game} ${game.team1} vs ${game.team2}`
+  let link = document.createElement('a')
+  link.className = "dropdown-item"
+  link.href = "#"
+  link.innerText = gameString
+  link.dataset.gameId = game.id
+  link.addEventListener('click', fetchGameActions)
+  loadGame.append(link)
+}
+
+function fetchGameActions(e) {
+  const game_url = URL_GAMES + `/${e.target.dataset.gameId}/actions`
+  fetch(game_url)
+    .then(res => res.json())
+    .then(console.log)
 }
