@@ -25,7 +25,7 @@ document.querySelector('Body').innerHTML += `
     </li>
   </ul>
   <form class="form-inline my-2 my-lg-0">
-    <a class="nav-link" href="#" id="add-player">Add Player</a>
+    <a class="nav-link" href="#" id="new-player">Add New Player</a>
   </form>
   <form class="form-inline my-2 my-lg-0">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

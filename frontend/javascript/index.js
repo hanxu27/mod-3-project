@@ -1,4 +1,7 @@
-const URL_GAMES = `http://localhost:3000/games`
+const URL = `http://localhost:3000/`
+
+const URL_GAMES = URL + `games`
+const URL_PLAYERS = URL + `players`
 // HTML ELEMENTS //
 const form = document.getElementById('form')
 const actionBar = document.getElementById('action-bar')
@@ -7,6 +10,8 @@ const newGameDiv = document.querySelector('#new-game-div')
 const newGameForm = document.querySelector('#new-game-form')
 const dateField = document.querySelector('#date')
 const loadGame = document.querySelector('#loadGamesDropdown')
+const newPlayerDiv = document.querySelector('#new-player-div')
+const newPlayerForm = document.querySelector('#new-player-form')
 
 // VARIABLES //
 let working_layer = new Konva.Layer()
@@ -24,13 +29,11 @@ let stage = new Konva.Stage({
 document.addEventListener('DOMContentLoaded', () => {
   // HTML ELEMENTS
 
-
-
   // EVENTS //
   document.addEventListener('click', handleClick)
   stage.addEventListener('click', handleStageClick)
   form.addEventListener('submit', createAction)
-  document.addEventListener('click', handleClick)
+  newPlayerForm.addEventListener('submit', createPlayer)
 
   // MAIN
   console.log('=== JS START ===')
@@ -109,6 +112,34 @@ function handleClick(e) {
   if (e.target.id === 'form-sub') createGame(e)
   if (e.target.id === 'form-back') cancelNew()
   if (e.target.className === 'nav-link') showActions(e.target)
+  if (e.target.id === 'new-player') newPlayer()
+  if (e.target.id === 'player-cancel') hideNewPlayerForm()
+}
+
+function newPlayer() {
+  newPlayerDiv.hidden = false
+}
+
+function hideNewPlayerForm() {
+  newPlayerForm.reset()
+  newPlayerDiv.hidden = true
+}
+
+function createPlayer(e) {
+  let newPlayer = { name: newPlayerForm.querySelector('#player-name').value, number: newPlayerForm.querySelector('#player-number').value, team: newPlayerForm.querySelector('#player-team').value, position: newPlayerForm.querySelector('#player-position').value }
+  console.log(newPlayer);
+  fetch(URL_PLAYERS, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify({ player: newPlayer })
+  }).then(res => res.json())
+    .then(res => {
+      hideNewPlayerForm()
+      console.log(res)
+    })
 }
 
 function cancelNew() {
@@ -131,7 +162,6 @@ function createGame(e) {
   const ma = newGameForm.querySelector('#match').value
   const ga = newGameForm.querySelector('#game').value
   let newGame = { team1: t1, team2: t2, date: da, tournament: tour, match: ma, game: ga }
-  console.log(newGame);
   fetch(URL_GAMES, {
     method: 'POST',
     headers: {
