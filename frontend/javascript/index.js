@@ -1,4 +1,42 @@
-// SEED DATA //
+const URL_GAMES = `http://localhost:3000/games`
+// HTML ELEMENTS //
+const form.getElementById('form')
+const actionBar = document.getElementById('action-bar')
+let active_action = actionBar.firstElementChild.firstElementChild.firstElementChild
+const newGameDiv = document.querySelector('#new-game-div')
+const newGameForm = document.querySelector('#new-game-form')
+const dateField = document.querySelector('#date')
+
+let stage = new Konva.Stage({
+  container: 'konva-container',
+  width: 1000,
+  height: 700
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+  // HTML ELEMENTS
+
+  // VARIABLES //
+  let working_layer = new Konva.Layer()
+  let first_click = true
+  let startX = 0
+  let startY = 0
+  let endX = 0
+  let endY = 0
+  
+  // EVENTS //
+  document.addEventListener('click', handleClick)
+  stage.addEventListener('click', handleStageClick)
+  form.addEventListener('submit', createAction)
+  document.addEventListener('click', handleClick)
+
+// MAIN
+console.log('=== JS START ===')
+// Konva.pixelRatio = 1;
+let court = new Image();
+court.src = 'assets/vb-court.png';
+court.onload = () => renderCourt()
+  // SEED DATA //
 let spikes = [
   {
     "id": 1,
@@ -55,51 +93,52 @@ let serves = [
     "updated_at": "2019-06-17T13:14:23.952Z"
   },
 ]
-
 // SEED DATA END //
 
-//=============================================================================================================
-
-// HTML ELEMENTS //
-const form = document.getElementById('form')
-const actionBar = document.getElementById('action-bar')
-let active_action = actionBar.firstElementChild.firstElementChild.firstElementChild
-
-let stage = new Konva.Stage({
-  container: 'konva-container',
-  width: 1000,
-  height: 700
+  // END //
 })
 
-// VARIABLES //
-let working_layer = new Konva.Layer()
-let first_click = true
-let startX = 0
-let startY = 0
-let endX = 0
-let endY = 0
-
-// EVENTS //
-document.addEventListener('click', handleClick)
-stage.addEventListener('click', handleStageClick)
-form.addEventListener('submit', createAction)
-
-// MAIN
-console.log('=== JS START ===')
-// Konva.pixelRatio = 1;
-let court = new Image();
-court.src = 'assets/vb-court.png';
-court.onload = () => renderCourt()
+//=============================================================================================================
 
 // ============================== FUNCTION DEFINITIONS ============================== //
 
 function handleClick(e) {
-  console.log(working_layer)
+  if (e.target.id === 'new-game') newGame()
+  if (e.target.id === 'form-sub') createGame(e)
+  if (e.target.id === 'form-back') cancelNew()
+  if (e.target.className === 'nav-link') showActions(e.target)
+}
 
-  if(e.target.className === 'nav-link') showActions(e.target)
-  // else if (e.target.id === 'new-game') newGame()
-  // else if (e.target.id === 'form-sub') createGame()
-  // else if (e.target.id === 'form-back') newOrEdit()
+function cancelNew() {
+  newGameDiv.hidden = true
+}
+
+function newGame() {
+  newGameDiv.hidden = false
+  let today = new Date()
+  today = today.toISOString()
+  date.value = today.split('T')[0]
+}
+
+function createGame(e) {
+  e.preventDefault()
+  const t1 = newGameForm.querySelector('#team1').value
+  const t2 = newGameForm.querySelector('#team2').value
+  const da = newGameForm.querySelector('#date').value
+  const tour = newGameForm.querySelector('#tournament').value
+  const ma = newGameForm.querySelector('#match').value
+  const ga = newGameForm.querySelector('#game').value
+  let newGame = { team1: t1, team2: t2, date: da, tournament: tour, match: ma, game: ga }
+  console.log(newGame);
+  fetch(URL_GAMES, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify({ game: newGame })
+  }).then(res => res.json())
+    .then(console.log)
 }
 
 function showActions(action) {
@@ -179,50 +218,4 @@ function drawArrow(startX, startY, endX, endY, color='black') {
   })
 }
 
-function newOrEdit() {
-  formDiv.innerHTML = `
-  <h1 class="page-header text-justify">Pick from options<h1>
-  <button class="btn-success btn-lg" id="new-game">New Game</button>
-  <button class="btn-info btn-lg" id="view-game">View Game</button>
-  `
-}
 
-function newGame() {
-  formDiv.innerHTML = `
-  <form>
-          <div class="form-group">
-            <label for="team1">Home Team</label>
-            <input type="text" class="form-control" id="team1" placeholder="Enter Team" required>
-          </div>
-          <div class="form-group">
-            <label for="team2">Away Team</label>
-            <input type="text" class="form-control" id="team2" placeholder="Enter Team" required>
-          </div>
-          <div class="form-group">
-            <label for="date">Date</label>
-            <input type="datetime-local" class="form-control" id="date" required>
-          </div>
-          <div class="form-group">
-            <label for="tournament">Tournament</label>
-            <input type="text" class="form-control" id="tournament" placeholder="Enter Tournament Name" required>
-          </div>
-          <div class="form-group">
-            <label for="match">Match</label>
-            <input type="text" class="form-control" id="match" placeholder="Group-A" required>
-            <small class="form-text text-muted">Group Stage, Playoffs, Finals</small>
-          </div>
-          <div class="form-group">
-            <label for="match">Game</label>
-            <select class="form-control" id="game">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            <small class="form-text text-muted">Set #</small>
-          </div>
-          <button type="submit" class="btn btn-primary btn-lg" id="form-sub">Submit</button> 
-          <button class="btn-danger btn-lg" id="form-back">Back</button>
-        </form>`
-}
