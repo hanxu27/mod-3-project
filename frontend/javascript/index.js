@@ -12,10 +12,7 @@ const dateField = document.querySelector('#date')
 const loadGame = document.querySelector('#loadGamesDropdown')
 const newPlayerDiv = document.querySelector('#new-player-div')
 const newPlayerForm = document.querySelector('#new-player-form')
-
-const servesBtn = document.getElementById('serves-btn')
-const spikesBtn = document.getElementById('spikes-btn')
-let active_action = spikesBtn
+const actionBtn = document.getElementById('toggle-action-btn')
 
 // VARIABLES //
 let currentGameId = 0
@@ -55,7 +52,7 @@ function handleClick(e) {
   // console.log('(', e.offsetX, ',', e.offsetY, ')')
 
   if (e.target.tagName === 'CANVAS') handleStageClick(e)
-  else if (e.target.parentElement.id === 'action-bar') renderActions(e.target)
+  else if (e.target.id === 'toggle-action-btn') toggleActionBtn()
   else if (e.target.id === 'new-game') newGameDiv.hidden ? showNewGameForm() : hideNewGameForm()
   else if (e.target.id === 'new-player') newPlayer()
   else if (e.target.id === 'player-cancel') hideNewPlayerForm()
@@ -95,28 +92,28 @@ function populateLocalArrays(actions) {
     if (action.actionType === 'serve') serves.push(action)
     else if (action.actionType === 'spike') spikes.push(action)
   })
-  renderActions(servesBtn)
+  actionBar.hidden = false
+  renderActions(actionBtn.innerText)
 }
 
-function renderActions(button) {
-  if (active_action.innerText === button.innerText) console.log('action already selected')
-  else {
-    let layers = stage.children
-    const max = layers.length - 1
-    for (let k = max; k > 0; k--)
-      layers[k].remove()
+function toggleActionBtn() {
+  actionBtn.innerText = actionBtn.innerText === 'Serves' ? 'Spikes' : 'Serves'
+  renderActions(actionBtn.innerText)
+}
 
-    working_layer = new Konva.Layer()
-    let layer = new Konva.Layer()
+function renderActions(action) {
+  let layers = stage.children
+  const max = layers.length - 1
+  for (let k = max; k > 0; k--)
+    layers[k].remove()
 
-    if (button.innerText === 'Serves')
-      serves.forEach(serve => layer.add(drawArrow(serve.start_x, serve.start_y, serve.end_x, serve.end_y)))
-    else if (button.innerText === 'Spikes')
-      spikes.forEach(spike => layer.add(drawArrow(spike.start_x, spike.start_y, spike.end_x, spike.end_y)))
+  working_layer = new Konva.Layer()
+  let layer = new Konva.Layer()
 
-    stage.add(layer)
+  if (action === 'Serves')
+    serves.forEach(serve => layer.add(drawArrow(serve.start_x, serve.start_y, serve.end_x, serve.end_y)))
+  else if (action === 'Spikes')
+    spikes.forEach(spike => layer.add(drawArrow(spike.start_x, spike.start_y, spike.end_x, spike.end_y)))
 
-    // CHANGE ACTIVE_ACTION TO UNSELECTED
-    active_action = button
-  }
+  stage.add(layer)
 }
