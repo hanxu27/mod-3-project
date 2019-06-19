@@ -19,7 +19,7 @@
 	background-color: green;
 }*/
 
-#form {
+#action-form {
 	position: absolute;
 	z-index: 1;
 	padding: 0.50em;
@@ -28,6 +28,6 @@
 }
 
 #new-game-div {
-	width: 98%;
+	width: 95%;
 	margin: auto;
 }
