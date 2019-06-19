@@ -1,4 +1,3 @@
-
 // URLS //
 const URL_BASE = 'http://localhost:3000/'
 const URL_GAMES = URL_BASE + `games`
@@ -7,7 +6,6 @@ const URL_PLAYERS = URL_BASE + `players`
 // HTML ELEMENTS //
 const actionForm = document.getElementById('action-form')
 const actionBar = document.getElementById('action-bar')
-let active_action = actionBar.firstElementChild.firstElementChild.firstElementChild
 const newGameDiv = document.querySelector('#new-game-div')
 const newGameForm = document.querySelector('#new-game-form')
 const dateField = document.querySelector('#date')
@@ -15,7 +13,13 @@ const loadGame = document.querySelector('#loadGamesDropdown')
 const newPlayerDiv = document.querySelector('#new-player-div')
 const newPlayerForm = document.querySelector('#new-player-form')
 
+const servesBtn = document.getElementById('serves-btn')
+const spikesBtn = document.getElementById('spikes-btn')
+let active_action = spikesBtn
+
 // VARIABLES //
+let serves = []
+let spikes = []
 let working_layer = new Konva.Layer()
 let first_click = true
 let startX = 0
@@ -45,12 +49,12 @@ court.onload = () => renderCourt()
 // ============================== FUNCTION DEFINITIONS ============================== //
 
 function handleClick(e) {
-  // console.log(e.target.tagName)
-  
-  if(e.target.tagName === 'CANVAS') handleStageClick(e)
+  // console.log('(', e.offsetX, ',', e.offsetY, ')')
+
+  if (e.target.tagName === 'CANVAS') handleStageClick(e)
+  else if (e.target.parentElement.id === 'action-bar') renderActions(e.target)
   else if (e.target.id === 'new-game') newGameDiv.hidden ? showNewGameForm() : hideNewGameForm()
   else if (e.target.id === 'form-sub') createGame(e)
-  else if (e.target.className === 'action nav-link') renderActions(e.target)
   else if (e.target.id === 'new-player') newPlayer()
   else if (e.target.id === 'player-cancel') hideNewPlayerForm()
   else if (e.target.id === 'form-back') hideNewGameForm(e)
@@ -111,30 +115,9 @@ function createNewGame(e) {
     },
     body: JSON.stringify({ game: newGame })
   })
-  .then(res => res.json())
-  .then(console.log)
-  .then(hideNewGameForm())
-}
-
-function renderActions(action) {
-  let layers = stage.children
-  const max = layers.length - 1
-  for (let k = max; k > 0; k--)
-    layers[k].remove()
-
-  working_layer = new Konva.Layer()
-  let layer = new Konva.Layer()
-
-  if (action.innerText === 'Serves')
-    serves.forEach(serve => layer.add(drawArrow(serve.start_x, serve.start_y, serve.end_x, serve.end_y)))
-  else if (action.innerText === 'Spikes')
-    spikes.forEach(spike => layer.add(drawArrow(spike.start_x, spike.start_y, spike.end_x, spike.end_y)))
-
-  stage.add(layer)
-
-  active_action.className = 'action nav-link'
-  action.className = 'action nav-link active'
-  active_action = action
+    .then(res => res.json())
+    .then(console.log)
+    .then(hideNewGameForm())
 }
 
 function handleStageClick(e) {
@@ -162,7 +145,6 @@ function handleStageClick(e) {
 }
 
 function showActionForm(e) {
-  console.log(e)
   actionForm.hidden = false
   actionForm.coords.value = `${startX}-${startY}-${endX}-${endY}`
   actionForm.style.top = e.pageY
@@ -215,5 +197,36 @@ function fetchGameActions(e) {
   const game_url = URL_GAMES + `/${e.target.dataset.gameId}/actions`
   fetch(game_url)
     .then(res => res.json())
-    .then(console.log)
+    .then(populateLocalArrays)
+}
+
+function populateLocalArrays(actions) {
+  actions.forEach(action => {
+    if (action.actionType === 'serve') serves.push(action)
+    else if (action.actionType === 'spike') spikes.push(action)
+  })
+  renderActions(servesBtn)
+}
+
+function renderActions(button) {
+  if (active_action.innerText === button.innerText) console.log('action already selected')
+  else {
+    let layers = stage.children
+    const max = layers.length - 1
+    for (let k = max; k > 0; k--)
+      layers[k].remove()
+
+    working_layer = new Konva.Layer()
+    let layer = new Konva.Layer()
+
+    if (button.innerText === 'Serves')
+      serves.forEach(serve => layer.add(drawArrow(serve.start_x, serve.start_y, serve.end_x, serve.end_y)))
+    else if (button.innerText === 'Spikes')
+      spikes.forEach(spike => layer.add(drawArrow(spike.start_x, spike.start_y, spike.end_x, spike.end_y)))
+
+    stage.add(layer)
+
+    // CHANGE ACTIVE_ACTION TO UNSELECTED
+    active_action = button
+  }
 }
