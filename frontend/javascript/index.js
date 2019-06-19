@@ -21,22 +21,19 @@ let stage = new Konva.Stage({
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-  // HTML ELEMENTS
-
-
-
   // EVENTS //
   document.addEventListener('click', handleClick)
   stage.addEventListener('click', handleStageClick)
   form.addEventListener('submit', createAction)
   document.addEventListener('click', handleClick)
 
-  // MAIN
+  // MAIN //
   console.log('=== JS START ===')
   // Konva.pixelRatio = 1;
   court = new Image();
   court.src = 'assets/vb-court.png';
   court.onload = () => renderCourt()
+  
   // SEED DATA //
   let spikes = [
     {
@@ -95,11 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   ]
   // SEED DATA END //
-
-  // END //
 })
-
-//=============================================================================================================
 
 // ============================== FUNCTION DEFINITIONS ============================== //
 
