@@ -1,3 +1,20 @@
+// IT'S NOT HASHKETBALL OKAY? //
+let currentGame = {
+  id: 0,
+  team1: {
+    name: '',
+    players: [],
+    serves: [],
+    spikes: []
+  },
+  team2: {
+    name: '',
+    players: [],
+    serves: [],
+    spikes: []
+  }
+}
+
 // URLS //
 const URL_BASE = 'http://localhost:3000/'
 const URL_GAMES = URL_BASE + `games`
@@ -20,12 +37,13 @@ let currentTeam1 = ''
 let currentTeam2 = ''
 let serves = []
 let spikes = []
-let working_layer = new Konva.Layer()
-let first_click = true
+let workingLayer = new Konva.Layer()
+
 let startX = 0
 let startY = 0
 let endX = 0
 let endY = 0
+
 let stage = new Konva.Stage({
   container: 'konva-container',
   width: 1000,
@@ -38,13 +56,15 @@ actionForm.addEventListener('submit', createAction)
 newGameForm.addEventListener('submit', createNewGame)
 newPlayerForm.addEventListener('submit', createPlayer)
 
-// MAIN //
-console.log('=== JS START ===')
+// INIT //
+console.log('=== JS INIT ===')
+
 // Konva.pixelRatio = 1;
-fetchGames()
 court = new Image();
 court.src = 'assets/vb-court.png';
 court.onload = () => renderCourt()
+
+fetchGames()
 
 // ============================== FUNCTION DEFINITIONS ============================== //
 
@@ -62,8 +82,8 @@ function handleClick(e) {
 // FOR NAVBAR LOAD GAMES //
 function fetchGames() {
   fetch(URL_GAMES)
-    .then(res => res.json())
-    .then(games => games.forEach(gameToString))
+  .then(res => res.json())
+  .then(games => games.forEach(gameToString))
 }
 
 function gameToString(game) {
@@ -79,12 +99,16 @@ function gameToString(game) {
 
 // AFTER LOAD GAME SELECTED FETCH ACTIONS FROM THAT GAME// 
 function fetchGameActions(e) {
-  const game_url = URL_GAMES + `/${e.target.dataset.gameId}/actions`
+  actionBar.hidden = false
   serves = []
   spikes = []
-  fetch(game_url)
-    .then(res => res.json())
-    .then(populateLocalArrays)
+  let currentGameId = parseInt(e.target.dataset.gameId)
+
+  console.log('Loading Game ID:', currentGameId)
+
+  fetch(URL_GAMES + `/${currentGameId}/actions`)
+  .then(res => res.json())
+  .then(populateLocalArrays)
 }
 
 function populateLocalArrays(actions) {
@@ -92,7 +116,6 @@ function populateLocalArrays(actions) {
     if (action.actionType === 'serve') serves.push(action)
     else if (action.actionType === 'spike') spikes.push(action)
   })
-  actionBar.hidden = false
   renderActions(actionBtn.innerText)
 }
 
@@ -102,12 +125,13 @@ function toggleActionBtn() {
 }
 
 function renderActions(action) {
+  console.log(serves)
   let layers = stage.children
   const max = layers.length - 1
   for (let k = max; k > 0; k--)
     layers[k].remove()
 
-  working_layer = new Konva.Layer()
+  workingLayer = new Konva.Layer()
   let layer = new Konva.Layer()
 
   if (action === 'Serves')
