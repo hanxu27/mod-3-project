@@ -32,6 +32,7 @@ const newPlayerForm = document.querySelector('#new-player-form')
 const teamBtn = document.getElementById('toggle-team-btn')
 const actionBtn = document.getElementById('toggle-action-btn')
 const colorBtn = document.getElementById('toggle-color-btn')
+const footer = document.querySelector('#footer')
 
 // VARIABLES //
 let currentGameId = 0
@@ -79,8 +80,9 @@ function handleClick(e) {
   if (e.target.tagName === 'CANVAS') handleStageClick(e)
   else if (e.target.id === 'toggle-action-btn') toggleActionBtn()
   else if (e.target.id === 'toggle-team-btn') toggleTeamBtn()
+  else if (e.target.id === 'toggle-color-btn') toggleColorBtn()
   else if (e.target.id === 'new-game') newGameDiv.hidden ? showNewGameForm() : hideNewGameForm()
-  else if (e.target.id === 'new-player') newPlayerDiv.hidden ? showNewPlayerForm() : hideNewPlayerform()
+  else if (e.target.id === 'new-player') newPlayerDiv.hidden ? showNewPlayerForm() : hideNewPlayerForm()
   else if (e.target.id === 'player-cancel') hideNewPlayerForm()
   else if (e.target.id === 'form-back') hideNewGameForm(e)
 }
@@ -115,7 +117,7 @@ function loadGameInfo(e) {
 
   teamBtn.innerText = currentGame.team1.name
   actionBtn.innerText = 'Serves'
-  colorBtn.innerText = 'Team'
+  colorBtn.innerText = 'By Team'
 
   fetchGameActions()
   fetchGamePlayers()
@@ -161,8 +163,6 @@ function fetchGamePlayers() {
     .then(players => players.forEach(player => currentGame['team2'].players.push(player)))
 }
 
-
-
 function toggleTeamBtn() {
   teamBtn.innerText = teamBtn.innerText === currentGame.team1.name ? currentGame.team2.name : currentGame.team1.name
   renderActions()
@@ -170,6 +170,14 @@ function toggleTeamBtn() {
 
 function toggleActionBtn() {
   actionBtn.innerText = actionBtn.innerText === 'Serves' ? 'Spikes' : 'Serves'
+  renderActions()
+}
+
+function toggleColorBtn() {
+  colorBtn.innerText = colorBtn.innerText === 'By Team' ? 'By Player' : 'By Team'
+  // clear players in footer //
+  footer.querySelector('#team1-players').innerHTML = ''
+  footer.querySelector('#team2-players').innerHTML = ''
   renderActions()
 }
 
@@ -184,40 +192,48 @@ function renderActions() {
   let layer = new Konva.Layer()
   let team_num = currentGame.team1.name === teamBtn.innerText ? 'team1' : 'team2'
 
-  if (actionBtn.innerText === 'Serves')
-    currentGame[team_num].serves.forEach(serve => layer.add(drawArrow(serve.start_x, serve.start_y, serve.end_x, serve.end_y, chooseColor(team_num, serve))))
-  else if (actionBtn.innerText === 'Spikes')
-    currentGame[team_num].spikes.forEach(spike => layer.add(drawArrow(spike.start_x, spike.start_y, spike.end_x, spike.end_y, chooseColor(team_num, spike))))
+  if (colorBtn.innerText === 'By Player') {
+    footer.querySelector('#team2-players').innerHTML = ''
+    footer.querySelector('#team1-players').innerHTML = ''
+    const playerColors = [[0, 255, 53], [255, 25, 0], [140, 0, 255], [255, 0, 228], [20, 0, 255], [0, 255, 200], [0, 140, 255], [0, 0, 0]]
+    const playerFooterColor = ["#00FF35", "#FF1900", "#8C00FF", "#FF00E4", "#1400FF", "#00FEC8", "#008CFF", "#000000"]
+    // iterate over players //
+    let i = 0
+    currentGame[team_num].players.forEach(player => {
+      // only draw actions that matches player //
+      currentGame[team_num][actionBtn.innerText.toLowerCase()].forEach(action => {
+        if (player.id === action.player_id) {
+          layer.add(drawArrow(action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action, team_num, player.number, playerColors[i][0], playerColors[i][1], playerColors[i][2])))
 
+        }
+      })
+      // add player to footer //
+      if (team_num === 'team1') footer.querySelector('#team1-players').innerHTML += `<li class="list-inline-item list-group-item-dark col-2" style="border-radius: 0.8em; color: ${playerFooterColor[i]}">${player.number}</li>`
+      else if (team_num === 'team2') footer.querySelector('#team2-players').innerHTML += `<li class="list-inline-item list-group-item-dark col-2" style="border-radius: 0.8em; color: ${playerFooterColor[i]}">${player.number}</li>`
+      i++
+    })
+  }
+  else currentGame[team_num][actionBtn.innerText.toLowerCase()].forEach(action => layer.add(drawArrow(action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action))))
   stage.add(layer)
 }
 
-function chooseColor(team, action) {
-
-  if (colorBtn.innerText === 'Team') {
-
-    if (team === 'team1') {
-      r = 0
-      g = 255
-      b = 0
-    } else {
-      r = 165
-      g = 0
-      b = 255
-    }
-
-    if (action.outcome === 'pass') {
+function chooseColor(action, team_num = false, playerNumber = false, r = 0, g = 255, b = 0) {
+  if (colorBtn.innerText === 'By Team') {
+    if (action.outcome === 'point') return "#FF00E4"
+    else return "#00FF35"
+  } else {
+    if (action.outcome !== 'point') {
       r + 90 > 255 ? r = 255 : r += 90
       g + 90 > 255 ? g = 255 : g += 90
       b + 90 > 255 ? b = 255 : b += 90
     }
     // else if (action.outcome === 'pass')
     //   0 // do nothing
-    else if (action.outcome === 'error') {
-      r = Math.round(r *= 0.85)
-      g = Math.round(g *= 0.85)
-      b = Math.round(b *= 0.85)
-    }
+    // else if (action.outcome === 'error') {
+    //   r = Math.round(r *= 0.85)
+    //   g = Math.round(g *= 0.85)
+    //   b = Math.round(b *= 0.85)
+    // }
     let hr = r.toString(16)
     if (!hr[1]) hr = ["0", hr].join('')
     let hg = g.toString(16)
@@ -225,14 +241,12 @@ function chooseColor(team, action) {
     let hb = b.toString(16)
     if (!hb[1]) hb = ["0", hb].join('')
     const base_color = "#" + hr + hg + hb
+    // Add player to footer //
 
     return base_color
   }
 }
 
-function giveColor(color, action) {
-
-}
 
 
 
