@@ -83,6 +83,8 @@ class GamesController < ApplicationController
     render json: @output, status: :ok
   end
 
+  # players
+
   def player_serves
     @game = Game.find(params[:gameId])
     @player = Player.find(params[:id])
@@ -133,6 +135,20 @@ class GamesController < ApplicationController
     @game = Game.find(params[:gameId])
     @player = Player.find(params[:id])
     render json: @game.selectPlayer(@player, 'spike', 'error'), status: :ok
+  end
+
+  # teams
+
+  def team_players
+    @game = Game.find(params[:gameId])
+    @team = params[:id] == '1' ? @game.team1 : @game.team2
+    render json: @game.selectTeamPlayer(@team), status: :ok
+  end
+
+  def team_actions
+    @game = Game.find(params[:gameId])
+    @team = params[:id] == '1' ? @game.team1 : @game.team2
+    render json: @game.selectTeam(@team), status: :ok
   end
 
   def team_serves

@@ -31,6 +31,12 @@ class Game < ApplicationRecord
       actions.select { |a| a.player.team == team && a.actionType == actionType }
     elsif outcome
       actions.select { |a| a.player.team == team && a.outcome == outcome }
+    else
+      actions.select { |a| a.player.team == team }
     end
+  end
+
+  def selectTeamPlayer(team)
+    players.select { |p| p.team == team }
   end
 end
