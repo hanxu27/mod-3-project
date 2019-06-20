@@ -196,15 +196,17 @@ function chooseColor(team, action) {
 
   if(colorBtn.innerText === 'Team') {
 
-    let base_color = team === 'team1' ? '2BDB26' : 'CF2AD1'
+    let base_color = team === 'team1' ? '0088ff' : 'ff4900'
     base_color = parseInt(base_color, 16)
 
-    if(action.outcome === 'pass')
+    console.log(base_color)
+
+    if(action.outcome === 'point')
+      base_color += 7813120
+    else if(action.outcome === 'pass')
       0 // do nothing
-    else if(action.outcome === 'point')
-      base_color += 60000
     else if(action.outcome === 'error')
-      base_color -= 60000
+      base_color -= 13410
 
     base_color = '#'+base_color.toString(16)
     return base_color
