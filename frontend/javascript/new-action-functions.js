@@ -43,7 +43,8 @@ function showActionForm(e) {
 
 function createAction(e) {
   e.preventDefault()
-  // const newActionType = startX < courtBoundLeft || startX > courtBoundRight ? "serve" : "spike"
+  const newActionType = startX < courtBoundLeft || startX > courtBoundRight ? "serve" : "spike"
+  console.log(newActionType)
   // const pId = 
   // // fetch here...
   // let newAction = {
