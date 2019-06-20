@@ -40,7 +40,7 @@ let currentTeam2 = ''
 let serves = []
 let spikes = []
 let workingLayer = new Konva.Layer()
-
+let firstClick = true
 let startX = 0
 let startY = 0
 let endX = 0

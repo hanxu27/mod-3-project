@@ -5,28 +5,28 @@ const courtBoundBot = 975
 const countMidline = 502
 
 function handleStageClick(e) {
-  if (first_click) {
+  if (firstClick) {
     // CANCEL ARROW //
     if (actionForm.hidden === false) {
       actionForm.hidden = true
       actionForm.reset()
-      working_layer.children[working_layer.children.length - 1].remove()
-      stage.add(working_layer)
+      workingLayer.children[workingLayer.children.length - 1].remove()
+      stage.add(workingLayer)
     }
     // SET START X,Y //
     else {
-      first_click = !first_click
+      firstClick = !firstClick
       startX = e.offsetX
       startY = e.offsetY
     }
   }
   // SET END X,Y //
   else {
-    first_click = !first_click
+    firstClick = !firstClick
     endX = e.offsetX
     endY = e.offsetY
-    working_layer.add(drawArrow(startX, startY, endX, endY))
-    stage.add(working_layer)
+    workingLayer.add(drawArrow(startX, startY, endX, endY))
+    stage.add(workingLayer)
     showActionForm(e)
   }
 }
