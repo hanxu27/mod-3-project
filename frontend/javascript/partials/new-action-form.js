@@ -4,7 +4,7 @@ document.querySelector('Body').innerHTML += `
 			<div id="af-col-1" class="col-md-7">
 				<input type="number" name="number" placeholder=" Player Number">
 				<br><br>
-				<select>
+				<select name="actionType">
 					<option disabled>Action Type</option>
 					<option value="serve">Serve</option>
 					<option value="pass">Pass</option>

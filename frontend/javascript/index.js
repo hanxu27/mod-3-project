@@ -35,11 +35,8 @@ const colorBtn = document.getElementById('toggle-color-btn')
 
 // VARIABLES //
 let workingLayer = new Konva.Layer()
-let stage = new Konva.Stage({
-  container: 'konva-container',
-  width: 1000,
-  height: 615+image_y_offset
-})
+let stage
+let court = new Image()
 
 // EVENTS //
 document.addEventListener('click', handleClick)
@@ -48,17 +45,18 @@ newGameForm.addEventListener('submit', createNewGame)
 newPlayerForm.addEventListener('submit', createPlayer)
 
 // INIT //
-document.addEventListener('DOMContentLoaded', () => {
-
-  fetchGames()
-
-})
 console.log('=== JS INIT ===')
-
 // Konva.pixelRatio = 1;
-court = new Image();
-court.src = 'assets/vb-court.png';
-court.onload = () => renderCourt()
+court.src = 'assets/court.jpg'
+court.onload = () => {
+  stage = new Konva.Stage({
+    container: 'konva-container',
+    width: court.width,
+    height: court.height
+  })
+  renderCourt()
+}
+fetchGames()
 
 // ============================== FUNCTION DEFINITIONS ============================== //
 

@@ -1,11 +1,11 @@
 // X-AXIS BOUNDS //
-const courtBoundLeft = 30
-const courtBoundRight = 975
-const countMidline = 502
+const courtBoundLeft  =   50
+const courtMidline    =  525
+const courtBoundRight = 1000
 // Y-AXIS BOUNDS //
-const image_y_offset = -88
-const courtBoundTop = 110 - image_y_offset
-const courtBoundBot = 975 - image_y_offset
+const courtBoundTop =  35
+const courtBoundBot = 515
+const spikeZone = [365, 685]
 
 let firstClick = true
 let startX = 0
@@ -15,21 +15,21 @@ let endY = 0
 
 function handleStageClick(e) {
   if (firstClick) {
-    // CANCEL ARROW //
-    if (actionForm.hidden === false) {
+    // CANCELS ARROW //
+    if (!actionForm.hidden) {
       actionForm.hidden = true
       actionForm.reset()
       workingLayer.children[workingLayer.children.length - 1].remove()
       stage.add(workingLayer)
     }
-    // SET START X,Y //
+    // SETS START COORDS //
     else {
       firstClick = !firstClick
       startX = e.offsetX
       startY = e.offsetY
     }
   }
-  // SET END X,Y //
+  // SETS END COORDS //
   else {
     firstClick = !firstClick
     endX = e.offsetX
@@ -40,10 +40,9 @@ function handleStageClick(e) {
   }
 }
 
-// SHOW FORM AT ENDING POINT //
+// SHOWS FORM AT CURSOR //
 function showActionForm(e) {
-  if (endX < courtBoundLeft || endX > courtBoundRight || endY < courtBoundTop || endY > courtBoundBot)
-    actionForm.outcome.value = 'error'
+  inferActionAndOutcome()
   actionForm.hidden = false
   actionForm.coords.value = `${startX}-${startY}-${endX}-${endY}`
   actionForm.style.top = e.pageY
@@ -71,16 +70,33 @@ function createAction(e) {
   actionForm.hidden = true
 }
 
-function inferActionType() {
+function inferActionAndOutcome() {
+  let ended_on_same_side = (startX < courtMidline && endX < courtMidline) || (startX > courtMidline && endX > courtMidline) 
+  console.log('same side? ', ended_on_same_side)
+  // SERVE BLOCK
+  if(startX < courtBoundLeft || startX > courtBoundRight) {
+    actionForm.actionType.value = 'serve'
+    actionForm.outcome.value = ended_on_same_side ? 'error' : 'pass'
+  }
+  // PASS BLOCK
+  else if(ended_on_same_side) {
+    actionForm.actionType.value = 'pass'
+    actionForm.outcome.value = 'pass'
+  }
+  // SPIKE BLOCK
+  else {
+    actionForm.actionType.value = 'spike'
+    actionForm.outcome.value = startX < spikeZone[0] || startX > spikeZone[1] ? 'pass' : 'point'
+  }
 
+  // final error check
+  if (endX < courtBoundLeft || endX > courtBoundRight || endY < courtBoundTop || endY > courtBoundBot)
+    actionForm.outcome.value = 'error'
 }
 
 function renderCourt() {
   let layer = new Konva.Layer()
-  let img = new Konva.Image({
-    y: image_y_offset,
-    image: court
-  })
+  let img = new Konva.Image({ image: court })
   layer.add(img)
   stage.add(layer)
 }
