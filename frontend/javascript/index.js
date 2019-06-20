@@ -59,9 +59,9 @@ newGameForm.addEventListener('submit', createNewGame)
 newPlayerForm.addEventListener('submit', createPlayer)
 
 // INIT //
-document.addEventListener('DOMContentLoaded',()=>{
+document.addEventListener('DOMContentLoaded', () => {
 
-fetchGames()
+  fetchGames()
 
 })
 console.log('=== JS INIT ===')
@@ -88,8 +88,8 @@ function handleClick(e) {
 // FOR NAVBAR LOAD GAMES //
 function fetchGames() {
   fetch(URL_GAMES)
-  .then(res => res.json())
-  .then(games => games.forEach(gameToString))
+    .then(res => res.json())
+    .then(games => games.forEach(gameToString))
 }
 
 function gameToString(game) {
@@ -132,13 +132,13 @@ function loadGameInfo(e) {
 // AFTER LOAD GAME SELECTED FETCH ACTIONS FROM THAT GAME// 
 function fetchGameActions() {
 
-  fetch(URL_GAMES+`${currentGame.id}/team/1/actions`)
+  fetch(URL_GAMES + `${currentGame.id}/team/1/actions`)
     .then(resp => resp.json())
-    .then(actions => populateActionArrays(actions, 'team1') )
+    .then(actions => populateActionArrays(actions, 'team1'))
 
-  fetch(URL_GAMES+`${currentGame.id}/team/2/actions`)
+  fetch(URL_GAMES + `${currentGame.id}/team/2/actions`)
     .then(resp => resp.json())
-    .then(actions => populateActionArrays(actions, 'team2') )
+    .then(actions => populateActionArrays(actions, 'team2'))
 }
 
 function populateActionArrays(actions, team) {
@@ -152,13 +152,13 @@ function populateActionArrays(actions, team) {
 
 function fetchGamePlayers() {
 
-  fetch(URL_GAMES+`${currentGame.id}/team/1/players`)
+  fetch(URL_GAMES + `${currentGame.id}/team/1/players`)
     .then(resp => resp.json())
-    .then(players => players.forEach(player => currentGame['team1'].players.push(player) ))
+    .then(players => players.forEach(player => currentGame['team1'].players.push(player)))
 
-  fetch(URL_GAMES+`${currentGame.id}/team/2/players`)
+  fetch(URL_GAMES + `${currentGame.id}/team/2/players`)
     .then(resp => resp.json())
-    .then(players => players.forEach(player => currentGame['team2'].players.push(player) ))
+    .then(players => players.forEach(player => currentGame['team2'].players.push(player)))
 }
 
 
@@ -185,35 +185,54 @@ function renderActions() {
   let team_num = currentGame.team1.name === teamBtn.innerText ? 'team1' : 'team2'
 
   if (actionBtn.innerText === 'Serves')
-    currentGame[team_num].serves.forEach(serve => layer.add(drawArrow(serve.start_x, serve.start_y, serve.end_x, serve.end_y, chooseColor(team_num, serve) )))
+    currentGame[team_num].serves.forEach(serve => layer.add(drawArrow(serve.start_x, serve.start_y, serve.end_x, serve.end_y, chooseColor(team_num, serve))))
   else if (actionBtn.innerText === 'Spikes')
-    currentGame[team_num].spikes.forEach(spike => layer.add(drawArrow(spike.start_x, spike.start_y, spike.end_x, spike.end_y, chooseColor(team_num, spike) )))
+    currentGame[team_num].spikes.forEach(spike => layer.add(drawArrow(spike.start_x, spike.start_y, spike.end_x, spike.end_y, chooseColor(team_num, spike))))
 
   stage.add(layer)
 }
 
 function chooseColor(team, action) {
 
-  if(colorBtn.innerText === 'Team') {
+  if (colorBtn.innerText === 'Team') {
 
-    let base_color = team === 'team1' ? '0088ff' : 'ff4900'
-    base_color = parseInt(base_color, 16)
+    if (team === 'team1') {
+      r = 0
+      g = 255
+      b = 0
+    } else {
+      r = 165
+      g = 0
+      b = 255
+    }
 
-    console.log(base_color)
+    if (action.outcome === 'pass') {
+      r + 90 > 255 ? r = 255 : r += 90
+      g + 90 > 255 ? g = 255 : g += 90
+      b + 90 > 255 ? b = 255 : b += 90
+    }
+    // else if (action.outcome === 'pass')
+    //   0 // do nothing
+    else if (action.outcome === 'error') {
+      r = Math.round(r *= 0.85)
+      g = Math.round(g *= 0.85)
+      b = Math.round(b *= 0.85)
+    }
+    let hr = r.toString(16)
+    if (!hr[1]) hr = ["0", hr].join('')
+    let hg = g.toString(16)
+    if (!hg[1]) hg = ["0", hg].join('')
+    let hb = b.toString(16)
+    if (!hb[1]) hb = ["0", hb].join('')
+    const base_color = "#" + hr + hg + hb
 
-    if(action.outcome === 'point')
-      base_color += 7813120
-    else if(action.outcome === 'pass')
-      0 // do nothing
-    else if(action.outcome === 'error')
-      base_color -= 13410
-
-    base_color = '#'+base_color.toString(16)
     return base_color
   }
 }
 
+function giveColor(color, action) {
 
+}
 
 
 
