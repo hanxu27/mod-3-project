@@ -15,8 +15,8 @@ document.querySelector('Body').innerHTML += `
 				<input type="submit" class="btn btn-primary">
 			</div>
 
-			<di id="af-col-2" class="col-md-5">
-				<label class="text-secondary">Action Outcome</label>
+			<div id="af-col-2" class="col-md-5">
+				<label class="text-secondary">Outcome</label>
 				<br>
 				<input type="radio" name="outcome" value="point"> point<br>
 				<input type="radio" name="outcome" value="pass"> pass<br>

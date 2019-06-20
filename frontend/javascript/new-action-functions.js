@@ -1,8 +1,17 @@
+// X-AXIS BOUNDS //
 const courtBoundLeft = 30
 const courtBoundRight = 975
-const courtBoundTop = 110
-const courtBoundBot = 975
 const countMidline = 502
+// Y-AXIS BOUNDS //
+const image_y_offset = -88
+const courtBoundTop = 110 - image_y_offset
+const courtBoundBot = 975 - image_y_offset
+
+let firstClick = true
+let startX = 0
+let startY = 0
+let endX = 0
+let endY = 0
 
 function handleStageClick(e) {
   if (firstClick) {
@@ -62,9 +71,16 @@ function createAction(e) {
   actionForm.hidden = true
 }
 
+function inferActionType() {
+
+}
+
 function renderCourt() {
   let layer = new Konva.Layer()
-  let img = new Konva.Image({ image: court })
+  let img = new Konva.Image({
+    y: image_y_offset,
+    image: court
+  })
   layer.add(img)
   stage.add(layer)
 }

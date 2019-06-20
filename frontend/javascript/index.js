@@ -34,22 +34,11 @@ const actionBtn = document.getElementById('toggle-action-btn')
 const colorBtn = document.getElementById('toggle-color-btn')
 
 // VARIABLES //
-let currentGameId = 0
-let currentTeam1 = ''
-let currentTeam2 = ''
-let serves = []
-let spikes = []
 let workingLayer = new Konva.Layer()
-let firstClick = true
-let startX = 0
-let startY = 0
-let endX = 0
-let endY = 0
-
 let stage = new Konva.Stage({
   container: 'konva-container',
   width: 1000,
-  height: 700
+  height: 615+image_y_offset
 })
 
 // EVENTS //
