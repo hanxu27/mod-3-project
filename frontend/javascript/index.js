@@ -1,24 +1,8 @@
-// IT'S NOT HASHKETBALL OKAY? //
-let currentGame = {
-  id: 0,
-  team1: {
-    name: '',
-    players: [],
-    serves: [],
-    spikes: []
-  },
-  team2: {
-    name: '',
-    players: [],
-    serves: [],
-    spikes: []
-  }
-}
-
 // URLS //
 const URL_BASE = 'http://localhost:3000/'
 const URL_GAMES = URL_BASE + `games/`
 const URL_PLAYERS = URL_BASE + `players/`
+const URL_ACTIONS = URL_BASE + `actions/`
 
 // HTML ELEMENTS //
 const actionForm = document.getElementById('action-form')
@@ -37,16 +21,18 @@ const footer = document.querySelector('#footer')
 // VARIABLES //
 let workingLayer = new Konva.Layer()
 let stage
+let currentGame 
 let court = new Image()
 
 // EVENTS //
 document.addEventListener('click', handleClick)
-actionForm.addEventListener('submit', createAction)
+actionForm.addEventListener('submit', findPlayer)
 newGameForm.addEventListener('submit', createNewGame)
 newPlayerForm.addEventListener('submit', createPlayer)
 
 // INIT //
 console.log('=== JS INIT ===')
+clearCurrentGame()
 // Konva.pixelRatio = 1;
 court.src = 'assets/court.jpg'
 court.onload = () => {
@@ -92,42 +78,38 @@ function gameToString(game) {
   link.dataset.gameId = game.id
   link.dataset.team1 = game.team1
   link.dataset.team2 = game.team2
+  // link.dataset.toggle = 'modal'
+  // link.dataset
+
 
   link.addEventListener('click', loadGameInfo)
   loadGame.append(link)
 }
 
-function loadGameInfo(e) {
+async function loadGameInfo(e) {
+  clearCurrentGame()
   currentGame.id = parseInt(e.target.dataset.gameId)
+  currentGame.title = e.target.innerText
   currentGame.team1.name = e.target.dataset.team1
   currentGame.team2.name = e.target.dataset.team2
-
   teamBtn.innerText = currentGame.team1.name
-  actionBtn.innerText = 'Serves'
-  colorBtn.innerText = 'By Team'
 
-  fetchGameActions()
-  fetchGamePlayers()
+  await fetchGameActions(1)
+  await fetchGameActions(2)
+  await fetchGamePlayers(1)
+  await fetchGamePlayers(2)
 
-  // ASYNC PROBLEMS
-  // console.log(currentGame)
-  // console.log(teamBtn.innerText)
-  // console.log(actionBtn.innerText)
-  // renderActions()
-
+  document.querySelector('.modal-body').innerText = currentGame.title
+  // $('#load-modal').modal('show')
+  renderActions()
   actionBar.hidden = false
 }
 
 // AFTER LOAD GAME SELECTED FETCH ACTIONS FROM THAT GAME// 
-function fetchGameActions() {
-
-  fetch(URL_GAMES + `${currentGame.id}/team/1/actions`)
+function fetchGameActions(team_num) {
+  return fetch(URL_GAMES + `${currentGame.id}/team/${team_num}/actions`)
     .then(resp => resp.json())
-    .then(actions => populateActionArrays(actions, 'team1'))
-
-  fetch(URL_GAMES + `${currentGame.id}/team/2/actions`)
-    .then(resp => resp.json())
-    .then(actions => populateActionArrays(actions, 'team2'))
+    .then(actions => populateActionArrays(actions, `team${team_num}`))
 }
 
 function populateActionArrays(actions, team) {
@@ -137,17 +119,10 @@ function populateActionArrays(actions, team) {
   })
 }
 
-// ...
-
-function fetchGamePlayers() {
-
-  fetch(URL_GAMES + `${currentGame.id}/team/1/players`)
+function fetchGamePlayers(team_num) {
+  return fetch(URL_GAMES + `${currentGame.id}/team/${team_num}/players`)
     .then(resp => resp.json())
-    .then(players => players.forEach(player => currentGame['team1'].players.push(player)))
-
-  fetch(URL_GAMES + `${currentGame.id}/team/2/players`)
-    .then(resp => resp.json())
-    .then(players => players.forEach(player => currentGame['team2'].players.push(player)))
+    .then(players => players.forEach(player => currentGame[`team${team_num}`].players.push(player)))
 }
 
 function toggleTeamBtn() {
@@ -161,7 +136,7 @@ function toggleActionBtn() {
 }
 
 function toggleColorBtn() {
-  colorBtn.innerText = colorBtn.innerText === 'By Team' ? 'By Player' : 'By Team'
+  colorBtn.innerText = colorBtn.innerText === 'Color: By Team' ? 'Color: By Player' : 'Color: By Team'
   // clear players in footer //
   footer.querySelector('#team1-players').innerHTML = ''
   footer.querySelector('#team2-players').innerHTML = ''
@@ -170,16 +145,16 @@ function toggleColorBtn() {
 
 function renderActions() {
   // clears canvas
-  let layers = stage.children
-  const max = layers.length - 1
-  for (let k = max; k > 0; k--)
-    layers[k].remove()
+  if (stage.children[1])
+    stage.children[1].remove()
+  if(stage.children[2])
+    stage.children[2].remove()
 
   workingLayer = new Konva.Layer()
   let layer = new Konva.Layer()
   let team_num = currentGame.team1.name === teamBtn.innerText ? 'team1' : 'team2'
 
-  if (colorBtn.innerText === 'By Player') {
+  if (colorBtn.innerText === 'Color: By Player') {
     footer.querySelector('#team2-players').innerHTML = ''
     footer.querySelector('#team1-players').innerHTML = ''
     const playerColors = [[0, 255, 53], [255, 25, 0], [140, 0, 255], [255, 0, 228], [20, 0, 255], [0, 255, 200], [0, 140, 255], [0, 0, 0]]
@@ -195,17 +170,21 @@ function renderActions() {
         }
       })
       // add player to footer //
-      if (team_num === 'team1') footer.querySelector('#team1-players').innerHTML += `<li class="list-inline-item list-group-item-dark col-2" style="border-radius: 0.8em; color: ${playerFooterColor[i]}">${player.number}</li>`
-      else if (team_num === 'team2') footer.querySelector('#team2-players').innerHTML += `<li class="list-inline-item list-group-item-dark col-2" style="border-radius: 0.8em; color: ${playerFooterColor[i]}">${player.number}</li>`
+      if (team_num === 'team1')
+        footer.querySelector('#team1-players').innerHTML += `<li class="list-inline-item list-group-item-dark col-2" style="border-radius: 0.8em; color: ${playerFooterColor[i]}">${player.number}</li>`
+      else if (team_num === 'team2')
+        footer.querySelector('#team2-players').innerHTML += `<li class="list-inline-item list-group-item-dark col-2" style="border-radius: 0.8em; color: ${playerFooterColor[i]}">${player.number}</li>`
       i++
     })
   }
-  else currentGame[team_num][actionBtn.innerText.toLowerCase()].forEach(action => layer.add(drawArrow(action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action))))
+  else
+    currentGame[team_num][actionBtn.innerText.toLowerCase()].forEach(action => layer.add(drawArrow(action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action))))
+  
   stage.add(layer)
 }
 
 function chooseColor(action, team_num = false, playerNumber = false, r = 0, g = 255, b = 0) {
-  if (colorBtn.innerText === 'By Team') {
+  if (colorBtn.innerText === 'Color: By Team') {
     if (action.outcome === 'point') return "#FF00E4"
     else return "#00FF35"
   } else {
@@ -231,6 +210,27 @@ function chooseColor(action, team_num = false, playerNumber = false, r = 0, g = 
     // Add player to footer //
 
     return base_color
+  }
+}
+
+function clearCurrentGame() {
+  currentGame = {
+    id: 0,
+    title: '',
+    team1: {
+      name: '',
+      players: [],
+      serves: [],
+      passes: [],
+      spikes: []
+    },
+    team2: {
+      name: '',
+      players: [],
+      serves: [],
+      passes: [],
+      spikes: []
+    }
   }
 }
 

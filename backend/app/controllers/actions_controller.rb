@@ -40,6 +40,6 @@ class ActionsController < GamesController
   private
 
   def s_params
-    params.require(:action).permit(:game, :player, :actionType, :outcome, :start_x, :start_y, :end_x, :end_y)
+    params.require(:new_action).permit(:game, :player, :actionType, :outcome, :start_x, :start_y, :end_x, :end_y)
   end
 end
