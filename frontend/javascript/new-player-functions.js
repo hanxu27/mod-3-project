@@ -2,7 +2,7 @@ function showNewPlayerForm() {
   newPlayerDiv.hidden = false
 }
 
-function hideNewPlayerform() {
+function hideNewPlayerForm() {
   newPlayerForm.reset()
   newPlayerDiv.hidden = true
 }

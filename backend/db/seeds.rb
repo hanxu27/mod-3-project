@@ -52,318 +52,137 @@ pa = 'pass'
 po = 'point'
 er = 'error'
 
+courtBoundLeft = 30
+courtBoundRight = 975
+courtBoundTop = 110
+courtBoundBot = 975 * 55 / 100
+courtMidline = 502
 
 
+y_var = 175
+x_var = 75
 # SERVES
+game = g1
+n = 3
 
-sx = 15
-sy = 110
-ex = 700
-ey = 110
-Action.create(game: g1, player: mp1, actionType: se, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(0, 400), end_x: ex + Faker::Number.between(0, 300), end_y: ey + Faker::Number.between(0, 400))
-Action.create(game: g1, player: mp1, actionType: se, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(0, 400), end_x: ex + Faker::Number.between(0, 300), end_y: ey + Faker::Number.between(0, 400))
-Action.create(game: g1, player: mp1, actionType: se, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(0, 400), end_x: ex + Faker::Number.between(0, 300), end_y: ey + Faker::Number.between(0, 400))
+sx = courtBoundLeft - 10
+sy = courtBoundTop + 75
+ex = courtBoundRight - 200
+ey = courtBoundBot - 250
 
-sx = 975-15
-sy = 975-110
-ex = 975-700
-ey = 975-110
-Action.create(game: g1, player: p1, actionType: se, outcome: pa, start_x: sx, start_y: sy - Faker::Number.between(0, 400), end_x: ex - Faker::Number.between(0, 300), end_y: ey - Faker::Number.between(0, 400))
-Action.create(game: g1, player: p1, actionType: se, outcome: po, start_x: sx, start_y: sy - Faker::Number.between(0, 400), end_x: ex - Faker::Number.between(0, 300), end_y: ey - Faker::Number.between(0, 400))
-Action.create(game: g1, player: p1, actionType: se, outcome: er, start_x: sx, start_y: sy - Faker::Number.between(0, 400), end_x: ex - Faker::Number.between(0, 300), end_y: ey - Faker::Number.between(0, 400))
+player = mp1
+n.times do
+  Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+end
+player = mp2
+
+n.times do
+  Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+end
+player = mp3
+
+n.times do
+  Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+end
+
+player = p1
+sx = courtBoundRight + 15
+sy = courtBoundTop + 500
+ex = courtBoundRight - 700
+ey = courtBoundBot - 110
+n.times do
+  Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+end
+player = p2
+n.times do
+  Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+end
+player = p3
+n.times do
+  Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+end
 
 # SPIKES
+sx = courtMidline - 50
+sy = courtBoundTop + 50
+ex = courtBoundRight - 100
+ey = courtBoundBot - 150
 
-sx = 350
-sy = 110
-ex = 550
-ey = 110
-Action.create(game: g1, player: mp1, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(0, 120), start_y: sy + Faker::Number.between(0, 400), end_x: ex + Faker::Number.between(0, 450), end_y: ey + Faker::Number.between(0, 400))
-Action.create(game: g1, player: mp1, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(0, 120), start_y: sy + Faker::Number.between(0, 400), end_x: ex + Faker::Number.between(0, 450), end_y: ey + Faker::Number.between(0, 400))
-Action.create(game: g1, player: mp1, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(0, 120), start_y: sy + Faker::Number.between(0, 400), end_x: ex + Faker::Number.between(0, 450), end_y: ey + Faker::Number.between(0, 400))
+player = mp1
+n.times do
+  Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+end
 
-sx = 975-350
-sy = 975-110
-ex = 975-550
-ey = 975-110
-Action.create(game: g1, player: p1, actionType: sp, outcome: pa, start_x: sx - Faker::Number.between(0, 120), start_y: sy - Faker::Number.between(0, 400), end_x: ex - Faker::Number.between(0, 450), end_y: ey - Faker::Number.between(0, 400))
-Action.create(game: g1, player: p1, actionType: sp, outcome: po, start_x: sx - Faker::Number.between(0, 120), start_y: sy - Faker::Number.between(0, 400), end_x: ex - Faker::Number.between(0, 450), end_y: ey - Faker::Number.between(0, 400))
-Action.create(game: g1, player: p1, actionType: sp, outcome: er, start_x: sx - Faker::Number.between(0, 120), start_y: sy - Faker::Number.between(0, 400), end_x: ex - Faker::Number.between(0, 450), end_y: ey - Faker::Number.between(0, 400))
+sx = courtMidline - 50
+sy = courtBoundTop + (courtBoundBot - courtBoundTop) / 2
+ex = courtBoundRight - 100
+ey = courtBoundBot - 150
 
+player = mp2
+n.times do
+  Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+end
 
+sx = courtMidline - 70
+sy = courtBoundBot - 75
+ex = courtBoundRight - 250
+ey = courtBoundTop + 100
 
+player = mp3
+n.times do
+  Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+end
 
+sx = courtMidline + 50
+sy = courtBoundBot - 55
+ex = courtBoundLeft - 100
+ey = courtBoundTop + 100
 
+player = p1
+n.times do
+  Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+end
 
+sx = courtMidline + 70
+sy = courtBoundTop + (courtBoundBot - courtBoundTop) / 2
+ex = courtBoundLeft - 50
+ey = courtBoundBot - 100
 
+player = p2
+n.times do
+  Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+end
 
+sx = courtMidline + 80
+sy = courtBoundTop + 50
+ex = courtBoundLeft - 50
+ey = courtBoundTop + 50
 
-
-
-
-
-# game = g2
-# sx = 0
-# sy = 350
-# ex = 600
-# ey = 300
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 350
-# sy = 350
-# ex = 500
-# ey = 800
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# game = g3
-# sx = 0
-# sy = 700
-# ex = 800
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 200
-# sy = 700
-# ex = 500
-# ey = 100
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-
-# game = g1
-# player = mp2
-# sx = 0
-# sy = 500
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# game = g2
-# sx = 0
-# sy = 0
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# game = g3
-# sx = 0
-# sy = 250
-# ex = 700
-# ey = 200
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-
-# game = g1
-# player = mp3
-# sx = 0
-# sy = 0
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# game = g2
-# sx = 0
-# sy = 0
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# game = g3
-# sx = 0
-# sy = 0
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-
-# game = g1
-# player = p1
-# sx = 0
-# sy = 0
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# game = g2
-# sx = 0
-# sy = 0
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# game = g3
-# sx = 0
-# sy = 0
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-
-# game = g1
-# player = p2
-# sx = 0
-# sy = 0
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# game = g2
-# sx = 0
-# sy = 0
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# game = g3
-# sx = 0
-# sy = 0
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-
-# game = g1
-# player = p3
-# sx = 0
-# sy = 0
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# game = g2
-# sx = 0
-# sy = 0
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# game = g3
-# sx = 0
-# sy = 0
-# ex = 10
-# ey = 600
-# Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# sx = 10
-# sy = 400
-# ex = 100
-# ey = 600
-# Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
-# Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx + Faker::Number.between(-30, 30), start_y: sy + Faker::Number.between(-15, 15), end_x: ex + Faker::Number.between(-30, 30), end_y: ey + Faker::Number.between(-15, 15))
+player = p3
+n.times do
+  Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+end
