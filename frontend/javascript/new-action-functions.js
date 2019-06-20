@@ -2,7 +2,7 @@ const courtBoundLeft = 30
 const courtBoundRight = 975
 const courtBoundTop = 110
 const courtBoundBot = 975
-const countMidline = 502
+const courtMidline = 502
 
 function handleStageClick(e) {
   if (firstClick) {

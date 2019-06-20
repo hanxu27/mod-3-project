@@ -37,6 +37,6 @@ class Game < ApplicationRecord
   end
 
   def selectTeamPlayer(team)
-    players.select { |p| p.team == team }
+    players.select { |p| p.team == team }.uniq
   end
 end
