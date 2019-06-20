@@ -35,23 +35,9 @@ const colorBtn = document.getElementById('toggle-color-btn')
 const footer = document.querySelector('#footer')
 
 // VARIABLES //
-let currentGameId = 0
-let currentTeam1 = ''
-let currentTeam2 = ''
-let serves = []
-let spikes = []
 let workingLayer = new Konva.Layer()
-let firstClick = true
-let startX = 0
-let startY = 0
-let endX = 0
-let endY = 0
-
-let stage = new Konva.Stage({
-  container: 'konva-container',
-  width: 1000,
-  height: 700
-})
+let stage
+let court = new Image()
 
 // EVENTS //
 document.addEventListener('click', handleClick)
@@ -60,17 +46,18 @@ newGameForm.addEventListener('submit', createNewGame)
 newPlayerForm.addEventListener('submit', createPlayer)
 
 // INIT //
-document.addEventListener('DOMContentLoaded', () => {
-
-  fetchGames()
-
-})
 console.log('=== JS INIT ===')
-
 // Konva.pixelRatio = 1;
-court = new Image();
-court.src = 'assets/vb-court.png';
-court.onload = () => renderCourt()
+court.src = 'assets/court.jpg'
+court.onload = () => {
+  stage = new Konva.Stage({
+    container: 'konva-container',
+    width: court.width,
+    height: court.height
+  })
+  renderCourt()
+}
+fetchGames()
 
 // ============================== FUNCTION DEFINITIONS ============================== //
 

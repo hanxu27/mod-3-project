@@ -15,20 +15,36 @@
 	border: 0.10em solid black;
 } */
 
-/*#konva-container {
-	background-color: green;
-}*/
+#konva-container {
+	margin-top: 5em;
+	margin-bottom: 2.5em;
+}
 
 button:focus {
-	outline:0;
+	outline: 0;
+}
+
+#legend ul {
+	list-style: none;
 }
 
 #action-form {
 	position: absolute;
 	z-index: 1;
-	padding: 0.50em;
+	margin: 0;
+	padding: 1em;
 	border: 0.10em solid black;
+	border-radius: 0.80em;
 	background-color: white;
+	width: 17em;
+}
+
+#af-col-1 {
+	line-height: 0.60em;
+}
+
+#af-col-1 input {
+	max-width: 105%;
 }
 
 #new-game-div {
