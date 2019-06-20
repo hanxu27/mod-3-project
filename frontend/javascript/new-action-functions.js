@@ -2,10 +2,10 @@
 const courtBoundLeft  =   50
 const courtMidline    =  525
 const courtBoundRight = 1000
+const spikeZone = [365, 685]
 // Y-AXIS BOUNDS //
 const courtBoundTop =  35
 const courtBoundBot = 515
-const spikeZone = [365, 685]
 
 let firstClick = true
 let startX = 0
@@ -15,21 +15,21 @@ let endY = 0
 
 function handleStageClick(e) {
   if (firstClick) {
-    // CANCELS ARROW //
+    // CANCELS ARROW
     if (!actionForm.hidden) {
       actionForm.hidden = true
       actionForm.reset()
       workingLayer.children[workingLayer.children.length - 1].remove()
       stage.add(workingLayer)
     }
-    // SETS START COORDS //
+    // SETS START COORDS
     else {
       firstClick = !firstClick
       startX = e.offsetX
       startY = e.offsetY
     }
   }
-  // SETS END COORDS //
+  // SETS END COORDS
   else {
     firstClick = !firstClick
     endX = e.offsetX
@@ -40,7 +40,7 @@ function handleStageClick(e) {
   }
 }
 
-// SHOWS FORM AT CURSOR //
+// SHOWS FORM AT CURSOR
 function showActionForm(e) {
   inferActionAndOutcome()
   actionForm.hidden = false
@@ -51,8 +51,7 @@ function showActionForm(e) {
 
 function createAction(e) {
   e.preventDefault()
-  const newActionType = startX < courtBoundLeft || startX > courtBoundRight ? "serve" : "spike"
-  console.log(newActionType)
+  let newAction = {}
   // const pId = 
   // // fetch here...
   // let newAction = {
