@@ -21,10 +21,12 @@ const footer = document.querySelector('#footer')
 // VARIABLES //
 let workingLayer = new Konva.Layer()
 let stage
-let currentGame 
+let currentGame
 let court = new Image()
-const playerColors = [[0, 255, 53], [255, 25, 0], [140, 0, 255], [255, 0, 228], [20, 0, 255], [0, 255, 200], [0, 140, 255], [0, 0, 0]]
-const playerFooterColor = ["#00FF35", "#FF1900", "#8C00FF", "#FF00E4", "#1400FF", "#00FEC8", "#008CFF", "#000000"]
+  // red blue teal purple yellow orange green pink grey lightblue dark green brown]
+const playerColors = [[214, 68, 68], [0, 140, 255], [33, 229, 170], [136, 68, 214], [209, 221, 31], [129, 223, 40], [108, 141, 217], [68, 113, 214], [169, 98, 22], [0, 0, 0]]
+const playerFooterColor = ["#D64444", "#008CFF", "#21E5AA", "#8844D6", "#D1DD1F", "#81DF28", "#D644D5", "#6C8DD9", "#A96216", "#000000"]
+
 
 // EVENTS //
 document.addEventListener('click', handleClick)
@@ -81,7 +83,7 @@ function gameToString(game) {
   link.className = "dropdown-item"
   link.href = "#"
   link.innerText = getGameTitle(game)
-  link.addEventListener('click', (e)=> loadGameInfo(game.id, link.innerText, game.team1, game.team2))
+  link.addEventListener('click', (e) => loadGameInfo(game.id, link.innerText, game.team1, game.team2))
   loadGame.append(link)
 }
 
@@ -185,19 +187,21 @@ function renderActions(id=null) {
   }
   else
     currentGame[team_num][actionBtn.innerText.toLowerCase()].forEach(action => layer.add(drawArrow(action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action))))
-  
+
   stage.add(layer)
 }
 
 function chooseColor(action, team_num = false, playerNumber = false, r = 0, g = 255, b = 0) {
   if (colorBtn.innerText === 'Color: By Team') {
-    if (action.outcome === 'point') return "#FF00E4"
-    else return "#00FF35"
+    if (action.outcome === 'point') return "#44D648"
+    else if (action.outcome === 'error') return "#D64444"
+    else return "#4461D6"
   } else {
-    if (action.outcome !== 'point') {
-      r + 90 > 255 ? r = 255 : r += 90
-      g + 90 > 255 ? g = 255 : g += 90
-      b + 90 > 255 ? b = 255 : b += 90
+    if (action.outcome === 'point') {
+      const adj = 40
+      r + adj > 255 ? r = 255 : r += adj
+      g + adj > 255 ? g = 255 : g += adj
+      b + adj > 255 ? b = 255 : b += adj
     }
     let hr = r.toString(16)
     if (!hr[1]) hr = ["0", hr].join('')
@@ -206,7 +210,6 @@ function chooseColor(action, team_num = false, playerNumber = false, r = 0, g = 
     let hb = b.toString(16)
     if (!hb[1]) hb = ["0", hb].join('')
     const base_color = "#" + hr + hg + hb
-    // Add player to footer //
 
     return base_color
   }
@@ -251,16 +254,3 @@ function clearCurrentGame() {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
