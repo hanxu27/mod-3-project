@@ -11,44 +11,22 @@ Action.destroy_all
 Game.destroy_all
 Player.destroy_all
 
-g1 = Game.create(team1: 'red', team2: 'blue', date: DateTime.now, tournament: 'AAU', match: 'group A', game: 1, score: '25-21')
-g2 = Game.create(team1: 'red', team2: 'blue', date: DateTime.now, tournament: 'AAU', match: 'group A', game: 2, score: '20-25')
-g3 = Game.create(team1: 'red', team2: 'blue', date: DateTime.now, tournament: 'AAU', match: 'group A', game: 3, score: '15-11')
-# g4 = Game.create(team1: 'triangle', team2: 'square', date: DateTime.now, tournament: 'AAU', match: 'group C', game: 1, score: 25-18)
+g1 = Game.create(team1: "United States", team2: "Germany", date: DateTime.now, tournament: 'AAU', match: 'group A', game: 1, score: '25-21')
 
-mp1 = Player.create(name: Faker::Name.name, number: 1, team: 'red', position: 'OH')
-mp2 = Player.create(name: Faker::Name.name, number: 2, team: 'red', position: 'S')
-mp3 = Player.create(name: Faker::Name.name, number: 3, team: 'red', position: 'MB')
+mp1 = Player.create(name: Faker::Name.name, number: 14, team: "United States", position: 'OH')
+mp2 = Player.create(name: "Han Xu", number: 27, team: "United States", position: 'S')
+mp3 = Player.create(name: "Andrew Allen", number: 67, team: "United States", position: 'MB')
 
-# mp4 = Player.create(name: Faker::Name.name, number: 4, team: 'red', position: 'OH')
-# my5 = Player.create(name: Faker::Name.name, number: 5, team: 'red', position: 'RS')
-# my6 = Player.create(name: Faker::Name.name, number: 31, team: 'red', position: 'DS')
-# mp11 = Player.create(name: Faker::Name.name, number: 1, team: 'triangle', position: 'OH')
-# mp12 = Player.create(name: Faker::Name.name, number: 2, team: 'triangle', position: 'S')
-# mp13 = Player.create(name: Faker::Name.name, number: 3, team: 'triangle', position: 'MB')
-# mp14 = Player.create(name: Faker::Name.name, number: 4, team: 'triangle', position: 'OH')
-# my15 = Player.create(name: Faker::Name.name, number: 5, team: 'triangle', position: 'RS')
-# my16 = Player.create(name: Faker::Name.name, number: 31, team: 'triangle', position: 'DS')
-
-p1 = Player.create(number: 3, team: 'blue')
-p2 = Player.create(number: 11, team: 'blue')
-p3 = Player.create(number: 48, team: 'blue')
-# p4 = Player.create(number: 23, team: 'blue')
-# p5 = Player.create(number: 18, team: 'blue')
-# p6 = Player.create(number: 82, team: 'blue')
-
-# p11 = Player.create(number: 8, team: 'square')
-# p12 = Player.create(number: 2, team: 'square')
-# p13 = Player.create(number: 9, team: 'square')
-# p14 = Player.create(number: 13, team: 'square')
-# p15 = Player.create(number: 5, team: 'square')
-# p16 = Player.create(number: 11, team: 'square')
+p1 = Player.create(number: 39, team: "Germany")
+p2 = Player.create(number: 11, team: "Germany")
+p3 = Player.create(number: 48, team: "Germany")
 
 # action actionType
 se = 'serve'
+pa = 'pass'
 sp = 'spike'
 # action outcome
-pa = 'pass'
+re = 'received'
 po = 'point'
 er = 'error'
 
@@ -63,7 +41,7 @@ y_var = 175
 x_var = 75
 # SERVES
 game = g1
-n = 3
+n = 2
 
 sx = courtBoundLeft - 10
 sy = courtBoundTop + 75
@@ -72,21 +50,21 @@ ey = courtBoundBot - 250
 
 player = mp1
 n.times do
-  Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: re, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
 end
 player = mp2
 
 n.times do
-  Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: re, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
 end
 player = mp3
 
 n.times do
-  Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: re, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
 end
@@ -97,19 +75,19 @@ sy = courtBoundTop + 500
 ex = courtBoundRight - 700
 ey = courtBoundBot - 110
 n.times do
-  Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: re, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
 end
 player = p2
 n.times do
-  Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: re, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
 end
 player = p3
 n.times do
-  Action.create(game: game, player: player, actionType: se, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: se, outcome: re, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: se, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: se, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
 end
@@ -122,7 +100,7 @@ ey = courtBoundBot - 150
 
 player = mp1
 n.times do
-  Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: re, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
 end
@@ -134,7 +112,7 @@ ey = courtBoundBot - 150
 
 player = mp2
 n.times do
-  Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: re, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
 end
@@ -146,7 +124,7 @@ ey = courtBoundTop + 100
 
 player = mp3
 n.times do
-  Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: re, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
 end
@@ -158,7 +136,7 @@ ey = courtBoundTop + 100
 
 player = p1
 n.times do
-  Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: re, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
 end
@@ -170,7 +148,7 @@ ey = courtBoundBot - 100
 
 player = p2
 n.times do
-  Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: re, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
 end
@@ -182,7 +160,54 @@ ey = courtBoundTop + 50
 
 player = p3
 n.times do
-  Action.create(game: game, player: player, actionType: sp, outcome: pa, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+  Action.create(game: game, player: player, actionType: sp, outcome: re, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: sp, outcome: po, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
   Action.create(game: game, player: player, actionType: sp, outcome: er, start_x: sx, start_y: sy + Faker::Number.between(-y_var, y_var), end_x: ex + Faker::Number.between(-x_var, x_var), end_y: ey + Faker::Number.between(-y_var, y_var))
+end
+
+
+# PASSES
+
+player = mp1
+n.times do
+  Action.create(game: game, player: player, actionType: pa, outcome: re, start_x: Faker::Number.between(courtBoundLeft, courtMidline), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtBoundLeft, courtMidline), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+  Action.create(game: game, player: player, actionType: pa, outcome: re, start_x: Faker::Number.between(courtBoundLeft, courtMidline), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtBoundLeft, courtMidline), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+  Action.create(game: game, player: player, actionType: pa, outcome: er, start_x: Faker::Number.between(courtBoundLeft, courtMidline), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtBoundLeft, courtMidline), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+end
+
+player = mp2
+n.times do
+  Action.create(game: game, player: player, actionType: pa, outcome: re, start_x: Faker::Number.between(courtBoundLeft, courtMidline), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtBoundLeft, courtMidline), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+  Action.create(game: game, player: player, actionType: pa, outcome: re, start_x: Faker::Number.between(courtBoundLeft, courtMidline), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtBoundLeft, courtMidline), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+  Action.create(game: game, player: player, actionType: pa, outcome: er, start_x: Faker::Number.between(courtBoundLeft, courtMidline), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtBoundLeft, courtMidline), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+end
+
+player = mp3
+n.times do
+  Action.create(game: game, player: player, actionType: pa, outcome: re, start_x: Faker::Number.between(courtBoundLeft, courtMidline), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtBoundLeft, courtMidline), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+  Action.create(game: game, player: player, actionType: pa, outcome: re, start_x: Faker::Number.between(courtBoundLeft, courtMidline), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtBoundLeft, courtMidline), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+  Action.create(game: game, player: player, actionType: pa, outcome: er, start_x: Faker::Number.between(courtBoundLeft, courtMidline), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtBoundLeft, courtMidline), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+end
+
+
+player = p1
+n.times do
+  Action.create(game: game, player: player, actionType: pa, outcome: re, start_x: Faker::Number.between(courtMidline, courtBoundRight), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtMidline, courtBoundRight), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+  Action.create(game: game, player: player, actionType: pa, outcome: re, start_x: Faker::Number.between(courtMidline, courtBoundRight), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtMidline, courtBoundRight), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+  Action.create(game: game, player: player, actionType: pa, outcome: er, start_x: Faker::Number.between(courtMidline, courtBoundRight), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtMidline, courtBoundRight), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+end
+
+player = p2
+n.times do
+  Action.create(game: game, player: player, actionType: pa, outcome: re, start_x: Faker::Number.between(courtMidline, courtBoundRight), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtMidline, courtBoundRight), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+  Action.create(game: game, player: player, actionType: pa, outcome: re, start_x: Faker::Number.between(courtMidline, courtBoundRight), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtMidline, courtBoundRight), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+  Action.create(game: game, player: player, actionType: pa, outcome: er, start_x: Faker::Number.between(courtMidline, courtBoundRight), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtMidline, courtBoundRight), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+end
+
+
+player = p3
+n.times do
+  Action.create(game: game, player: player, actionType: pa, outcome: re, start_x: Faker::Number.between(courtMidline, courtBoundRight), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtMidline, courtBoundRight), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+  Action.create(game: game, player: player, actionType: pa, outcome: re, start_x: Faker::Number.between(courtMidline, courtBoundRight), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtMidline, courtBoundRight), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
+  Action.create(game: game, player: player, actionType: pa, outcome: er, start_x: Faker::Number.between(courtMidline, courtBoundRight), start_y: Faker::Number.between(courtBoundTop, courtBoundBot), end_x: Faker::Number.between(courtMidline, courtBoundRight), end_y: Faker::Number.between(courtBoundTop, courtBoundBot))
 end
