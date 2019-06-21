@@ -178,7 +178,7 @@ function renderActions(id=null) {
       // only draw actions that matches player //
       currentGame[team_num][actionBtn.innerText.toLowerCase()].forEach(action => {
         if ( (player.id === action.player_id && id === null) || (player.id === action.player_id && id == player.id) )
-          layer.add(drawArrow(action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action, team_num, player.number, playerColors[i][0], playerColors[i][1], playerColors[i][2])))
+          drawArrow(layer, action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action, team_num, player.number, playerColors[i][0], playerColors[i][1], playerColors[i][2]))
       })
       // add players to footer //
       footer.querySelector(`#${team_num}-players`).innerHTML += `<button data-player-id="${player.id}" class="player-btn" style="color: ${playerFooterColor[i]}">${player.number}</button>`
@@ -186,7 +186,7 @@ function renderActions(id=null) {
     })
   }
   else
-    currentGame[team_num][actionBtn.innerText.toLowerCase()].forEach(action => layer.add(drawArrow(action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action))))
+    currentGame[team_num][actionBtn.innerText.toLowerCase()].forEach(action => drawArrow(layer, action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action)))
 
   stage.add(layer)
 }
@@ -198,7 +198,7 @@ function chooseColor(action, team_num = false, playerNumber = false, r = 0, g = 
     else return "#4461D6"
   } else {
     if (action.outcome === 'point') {
-      const adj = 40
+      const adj = 100
       r + adj > 255 ? r = 255 : r += adj
       g + adj > 255 ? g = 255 : g += adj
       b + adj > 255 ? b = 255 : b += adj
@@ -215,17 +215,17 @@ function chooseColor(action, team_num = false, playerNumber = false, r = 0, g = 
   }
 }
 
-function renderPlayerActions(id, team) {
-  clearActions()
-  workingLayer = new Konva.Layer()
-  let layer = new Konva.Layer()
+// function renderPlayerActions(id, team) {
+//   clearActions()
+//   workingLayer = new Konva.Layer()
+//   let layer = new Konva.Layer()
 
-  currentGame[team][actionBtn.innerText.toLowerCase()].forEach(action => {
-    if(action.player_id == id)
-      layer.add(drawArrow(action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action)))
-  })
-  stage.add(layer)
-}
+//   currentGame[team][actionBtn.innerText.toLowerCase()].forEach(action => {
+//     if(action.player_id == id)
+//       layer.add(drawArrow(action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action)))
+//   })
+//   stage.add(layer)
+// }
 
 function clearActions() {
   let layers = stage.children
