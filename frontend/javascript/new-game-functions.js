@@ -31,6 +31,6 @@ function createNewGame(e) {
     .then(game => {
       hideNewGameForm()
       gameToString(game)
-      loadGameInfo(game.id, getGameTitle(game), game.team1, game.team2)
+      loadGameInfo(game.id, getGameTitle(game), game.team1, game.team2, false)
     })
 }

@@ -2,7 +2,7 @@ document.querySelector('Body').innerHTML += `
 	<form id="action-form" hidden>
 		<div class="row">
 			<div id="af-col-1" class="col-md-7">
-				<input type="number" name="number" placeholder=" Player Number">
+				<input required type="number" name="number" placeholder=" Player Number">
 				<br><br>
 				<select name="actionType">
 					<option disabled>Action Type</option>

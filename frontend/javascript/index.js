@@ -36,8 +36,8 @@ newPlayerForm.addEventListener('submit', createPlayer)
 
 // INIT //
 console.log('=== JS INIT ===')
-clearCurrentGame()
 // Konva.pixelRatio = 1;
+
 court.src = 'assets/court.jpg'
 court.onload = () => {
   stage = new Konva.Stage({
@@ -46,7 +46,10 @@ court.onload = () => {
     height: court.height
   })
   renderCourt()
+  stage.attrs.container.hidden = true
 }
+
+clearCurrentGame()
 fetchGames()
 
 // ============================== FUNCTION DEFINITIONS ============================== //
@@ -59,7 +62,6 @@ function handleClick(e) {
   else if (e.target.id === 'toggle-team-btn') toggleTeamBtn()
   else if (e.target.id === 'toggle-color-btn') toggleColorBtn()
   else if (e.target.className === 'player-btn') togglePlayerBtn(e.target)
-
   else if (e.target.id === 'new-game') newGameDiv.hidden ? showNewGameForm() : hideNewGameForm()
   else if (e.target.id === 'new-player') newPlayerDiv.hidden ? showNewPlayerForm() : hideNewPlayerForm()
   else if (e.target.id === 'player-cancel') hideNewPlayerForm()
@@ -75,7 +77,7 @@ function fetchGames() {
 }
 
 function getGameTitle(game) {
-  return `${game.date} ${game.tournament} ${game.match} ${game.game} ${game.team1} vs ${game.team2}`
+  return `[${game.date}] ${game.tournament} - ${game.match} - Game ${game.game} - ${game.team1} vs ${game.team2}`
 }
 
 function gameToString(game) {
@@ -87,7 +89,15 @@ function gameToString(game) {
   loadGame.append(link)
 }
 
-function loadGameInfo(id, title, team1, team2) {
+function loadGameInfo(id, title, team1, team2, loaded=true) {
+  if(actionBar.hidden) {
+    actionBar.hidden = false
+    stage.attrs.container.hidden = false
+    document.getElementById('footer').hidden = false
+    document.getElementById('new-player-btn').hidden = false
+  }
+
+  document.querySelector('body').style.background = 'none';
   clearCurrentGame()
   currentGame.id = parseInt(id)
   currentGame.title = title
@@ -95,15 +105,17 @@ function loadGameInfo(id, title, team1, team2) {
   currentGame.team2.name = team2
   teamBtn.innerText = currentGame.team1.name
 
+
   fetchGameActions(1)
   fetchGameActions(2)
   fetchGamePlayers(1)
   fetchGamePlayers(2)
 
-  document.querySelector('.modal-body').innerText = currentGame.title
-  // $('#load-modal').modal('show')
+  document.querySelector('.modal-title').innerText = loaded ? 'Game loaded!' : 'Game saved!'
+  document.querySelector('.modal-body').innerText = `You are now viewing:\n ${currentGame.title}`
+  $('#load-modal').modal('show')
+
   renderActions()
-  actionBar.hidden = false
 }
 
 // AFTER LOAD GAME SELECTED FETCH ACTIONS FROM THAT GAME// 
@@ -214,18 +226,6 @@ function chooseColor(action, team_num = false, playerNumber = false, r = 0, g = 
     return base_color
   }
 }
-
-// function renderPlayerActions(id, team) {
-//   clearActions()
-//   workingLayer = new Konva.Layer()
-//   let layer = new Konva.Layer()
-
-//   currentGame[team][actionBtn.innerText.toLowerCase()].forEach(action => {
-//     if(action.player_id == id)
-//       layer.add(drawArrow(action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action)))
-//   })
-//   stage.add(layer)
-// }
 
 function clearActions() {
   let layers = stage.children

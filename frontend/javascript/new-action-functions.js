@@ -28,8 +28,12 @@ function handleStageClick(e) {
     firstClick = !firstClick
     endX = e.offsetX
     endY = e.offsetY
-    workingLayer.add(drawArrow(startX, startY, endX, endY))
+    drawArrow(workingLayer, startX, startY, endX, endY)
     stage.add(workingLayer)
+
+    //remove if you want multiple new actions to show at once
+    workingLayer = new Konva.Layer()
+
     showActionForm(e)
   }
 }
@@ -37,8 +41,8 @@ function handleStageClick(e) {
 function cancelActionForm() {
   actionForm.hidden = true
   actionForm.reset()
-  workingLayer.children[workingLayer.children.length - 1].remove()
-  stage.add(workingLayer)
+  stage.children[stage.children.length-1].remove()
+  workingLayer = new Konva.Layer()
 }
 
 // SHOWS FORM AT CURSOR
@@ -80,6 +84,10 @@ function findPlayer(e) {
 }
 
 function createAction(id, team) {
+  //remove if you want multiple new actions to show at once
+  if(stage.children.length > 2)
+    stage.children[stage.children.length-2].remove()
+
   let newAction = {
     new_action: {
       game_id: currentGame.id,
@@ -103,7 +111,6 @@ function createAction(id, team) {
   })
   .then(resp => resp.json())
   .then(action => {
-    console.log(action)
     if(action.actionType === 'serve')
       team.serves.push(action)
     else if(action.actionType === 'spike')
@@ -113,6 +120,7 @@ function createAction(id, team) {
 
     actionForm.reset()
     actionForm.hidden = true
+    
   })
 }
 

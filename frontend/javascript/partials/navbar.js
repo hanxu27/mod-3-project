@@ -1,6 +1,7 @@
 document.querySelector('Body').innerHTML += `
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#"><i class="volleyball ball icon"></i>Vectors</a>
+
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href="#" id="new-game">New Game</a>
@@ -14,14 +15,10 @@ document.querySelector('Body').innerHTML += `
         </div>
       </li>
     </ul>
-    <div class="form-inline my-2 my-lg-0">
+
+    <div hidden id="new-player-btn" class="form-inline my-2 my-lg-0">
       <a class="nav-link" href="#" id="new-player">Add New Player</a>
     </div>
 
   </nav>
 `
-
-{/* <form class="form-inline my-2 my-lg-0">
-<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-</form> */}
