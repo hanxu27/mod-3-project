@@ -19,7 +19,7 @@ document.querySelector('Body').innerHTML += `
 				<label class="text-secondary">Outcome</label>
 				<br>
 				<input type="radio" name="outcome" value="point"> point<br>
-				<input type="radio" name="outcome" value="recieved"> recieved<br>
+				<input type="radio" name="outcome" value="received"> received<br>
 				<input type="radio" name="outcome" value="error"> error<br>
 			</div>
 		</div>

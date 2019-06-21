@@ -130,18 +130,18 @@ function inferActionAndOutcome() {
   // SERVE BLOCK
   if(startX < courtBoundLeft || startX > courtBoundRight) {
     actionForm.actionType.value = 'serve'
-    actionForm.outcome.value = ended_on_same_side ? 'error' : 'recieved'
+    actionForm.outcome.value = ended_on_same_side ? 'error' : 'received'
   }
   // PASS BLOCK
   else if(ended_on_same_side) {
     actionForm.actionType.value = 'pass'
-    actionForm.outcome.value = 'recieved'
+    actionForm.outcome.value = 'received'
   }
   // SPIKE BLOCK
   else {
     actionForm.actionType.value = 'spike'
     // actionForm.outcome.value = startX < spikeZone[0] || startX > spikeZone[1] ? 'pass' : 'point'
-    actionForm.outcome.value = 'recieved'
+    actionForm.outcome.value = 'received'
   }
 
   // final error check

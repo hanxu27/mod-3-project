@@ -129,6 +129,7 @@ function populateActionArrays(actions, team) {
   actions.forEach(action => {
     if (action.actionType === 'serve') currentGame[team].serves.push(action)
     else if (action.actionType === 'spike') currentGame[team].spikes.push(action)
+    else if (action.actionType === 'pass') currentGame[team].passes.push(action)
   })
 }
 
@@ -205,9 +206,9 @@ function renderActions(id=null) {
 
 function chooseColor(action, team_num = false, playerNumber = false, r = 0, g = 255, b = 0) {
   if (colorBtn.innerText === 'Color: By Team') {
-    if (action.outcome === 'point') return "#44D648"
-    else if (action.outcome === 'error') return "#D64444"
-    else return "#4461D6"
+    if (action.outcome === 'point') return "#15a919"
+    else if (action.outcome === 'error') return "#c43636"
+    else return "#6075dd"
   } else {
     if (action.outcome === 'point') {
       const adj = 100
