@@ -23,6 +23,8 @@ let workingLayer = new Konva.Layer()
 let stage
 let currentGame 
 let court = new Image()
+const playerColors = [[0, 255, 53], [255, 25, 0], [140, 0, 255], [255, 0, 228], [20, 0, 255], [0, 255, 200], [0, 140, 255], [0, 0, 0]]
+const playerFooterColor = ["#00FF35", "#FF1900", "#8C00FF", "#FF00E4", "#1400FF", "#00FEC8", "#008CFF", "#000000"]
 
 // EVENTS //
 document.addEventListener('click', handleClick)
@@ -54,6 +56,7 @@ function handleClick(e) {
   else if (e.target.id === 'toggle-action-btn') toggleActionBtn()
   else if (e.target.id === 'toggle-team-btn') toggleTeamBtn()
   else if (e.target.id === 'toggle-color-btn') toggleColorBtn()
+  else if (e.target.className === 'player-btn') togglePlayerBtn(e.target)
 
   else if (e.target.id === 'new-game') newGameDiv.hidden ? showNewGameForm() : hideNewGameForm()
   else if (e.target.id === 'new-player') newPlayerDiv.hidden ? showNewPlayerForm() : hideNewPlayerForm()
@@ -149,12 +152,15 @@ function toggleColorBtn() {
   renderActions()
 }
 
-function renderActions() {
-  // clears canvas
-  let layers = stage.children
-  const max = layers.length - 1
-  for (let k = max; k > 0; k--)
-    layers[k].remove()
+function togglePlayerBtn(button) {
+  if(button.innerText === 'ALL')
+    renderActions()
+  else
+    renderActions(button.dataset.playerId)
+}
+
+function renderActions(id=null) {
+  clearActions()
 
   workingLayer = new Konva.Layer()
   let layer = new Konva.Layer()
@@ -163,23 +169,17 @@ function renderActions() {
   if (colorBtn.innerText === 'Color: By Player') {
     footer.querySelector('#team2-players').innerHTML = ''
     footer.querySelector('#team1-players').innerHTML = ''
-    const playerColors = [[0, 255, 53], [255, 25, 0], [140, 0, 255], [255, 0, 228], [20, 0, 255], [0, 255, 200], [0, 140, 255], [0, 0, 0]]
-    const playerFooterColor = ["#00FF35", "#FF1900", "#8C00FF", "#FF00E4", "#1400FF", "#00FEC8", "#008CFF", "#000000"]
     // iterate over players //
     let i = 0
+    footer.querySelector(`#${team_num}-players`).innerHTML += `<button data-player-id="all" class="player-btn">ALL</button>`
     currentGame[team_num].players.forEach(player => {
       // only draw actions that matches player //
       currentGame[team_num][actionBtn.innerText.toLowerCase()].forEach(action => {
-        if (player.id === action.player_id) {
+        if ( (player.id === action.player_id && id === null) || (player.id === action.player_id && id == player.id) )
           layer.add(drawArrow(action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action, team_num, player.number, playerColors[i][0], playerColors[i][1], playerColors[i][2])))
-
-        }
       })
-      // add player to footer //
-      if (team_num === 'team1')
-        footer.querySelector('#team1-players').innerHTML += `<li class="list-inline-item list-group-item-dark col-2" style="border-radius: 0.8em; color: ${playerFooterColor[i]}">${player.number}</li>`
-      else if (team_num === 'team2')
-        footer.querySelector('#team2-players').innerHTML += `<li class="list-inline-item list-group-item-dark col-2" style="border-radius: 0.8em; color: ${playerFooterColor[i]}">${player.number}</li>`
+      // add players to footer //
+      footer.querySelector(`#${team_num}-players`).innerHTML += `<button data-player-id="${player.id}" class="player-btn" style="color: ${playerFooterColor[i]}">${player.number}</button>`
       i++
     })
   }
@@ -199,13 +199,6 @@ function chooseColor(action, team_num = false, playerNumber = false, r = 0, g = 
       g + 90 > 255 ? g = 255 : g += 90
       b + 90 > 255 ? b = 255 : b += 90
     }
-    // else if (action.outcome === 'recieved')
-    //   0 // do nothing
-    // else if (action.outcome === 'error') {
-    //   r = Math.round(r *= 0.85)
-    //   g = Math.round(g *= 0.85)
-    //   b = Math.round(b *= 0.85)
-    // }
     let hr = r.toString(16)
     if (!hr[1]) hr = ["0", hr].join('')
     let hg = g.toString(16)
@@ -217,6 +210,25 @@ function chooseColor(action, team_num = false, playerNumber = false, r = 0, g = 
 
     return base_color
   }
+}
+
+function renderPlayerActions(id, team) {
+  clearActions()
+  workingLayer = new Konva.Layer()
+  let layer = new Konva.Layer()
+
+  currentGame[team][actionBtn.innerText.toLowerCase()].forEach(action => {
+    if(action.player_id == id)
+      layer.add(drawArrow(action.start_x, action.start_y, action.end_x, action.end_y, chooseColor(action)))
+  })
+  stage.add(layer)
+}
+
+function clearActions() {
+  let layers = stage.children
+  const max = layers.length - 1
+  for (let k = max; k > 0; k--)
+    layers[k].remove()
 }
 
 function clearCurrentGame() {
