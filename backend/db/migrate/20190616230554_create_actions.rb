@@ -3,8 +3,10 @@
 class CreateActions < ActiveRecord::Migration[5.2]
   def change
     create_table :actions do |t|
-      t.references :game, foreign_key: true
-      t.references :player, foreign_key: true
+      # t.references :game, foreign_key: true
+      # t.references :player, foreign_key: true
+      t.integer :game_id
+      t.integer :player_id
       t.string :actionType
       t.string :outcome
       t.float :start_x

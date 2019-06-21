@@ -86,7 +86,7 @@ function gameToString(game) {
   loadGame.append(link)
 }
 
-async function loadGameInfo(e) {
+function loadGameInfo(e) {
   clearCurrentGame()
   currentGame.id = parseInt(e.target.dataset.gameId)
   currentGame.title = e.target.innerText
@@ -94,10 +94,10 @@ async function loadGameInfo(e) {
   currentGame.team2.name = e.target.dataset.team2
   teamBtn.innerText = currentGame.team1.name
 
-  await fetchGameActions(1)
-  await fetchGameActions(2)
-  await fetchGamePlayers(1)
-  await fetchGamePlayers(2)
+  fetchGameActions(1)
+  fetchGameActions(2)
+  fetchGamePlayers(1)
+  fetchGamePlayers(2)
 
   document.querySelector('.modal-body').innerText = currentGame.title
   // $('#load-modal').modal('show')
@@ -145,10 +145,10 @@ function toggleColorBtn() {
 
 function renderActions() {
   // clears canvas
-  if (stage.children[1])
-    stage.children[1].remove()
-  if(stage.children[2])
-    stage.children[2].remove()
+  let layers = stage.children
+  const max = layers.length - 1
+  for (let k = max; k > 0; k--)
+    layers[k].remove()
 
   workingLayer = new Konva.Layer()
   let layer = new Konva.Layer()
@@ -193,7 +193,7 @@ function chooseColor(action, team_num = false, playerNumber = false, r = 0, g = 
       g + 90 > 255 ? g = 255 : g += 90
       b + 90 > 255 ? b = 255 : b += 90
     }
-    // else if (action.outcome === 'pass')
+    // else if (action.outcome === 'recieved')
     //   0 // do nothing
     // else if (action.outcome === 'error') {
     //   r = Math.round(r *= 0.85)

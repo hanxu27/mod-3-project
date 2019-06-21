@@ -61,7 +61,7 @@ class GamesController < ApplicationController
 
   def nonaces
     @game = Game.find(params[:id])
-    @output = @game.selectAction('serve', 'pass')
+    @output = @game.selectAction('serve', 'recieved')
     @output += @game.selectAction('serve', 'error')
     render json: @output, status: :ok
   end
@@ -78,7 +78,7 @@ class GamesController < ApplicationController
 
   def nonkills
     @game = Game.find(params[:id])
-    @output = @game.selectAction('spike', 'pass')
+    @output = @game.selectAction('spike', 'recieved')
     @output += @game.selectAction('spike', 'error')
     render json: @output, status: :ok
   end
@@ -100,7 +100,7 @@ class GamesController < ApplicationController
   def player_nonaces
     @game = Game.find(params[:gameId])
     @player = Player.find(params[:id])
-    @output = @game.selectPlayer(@player, 'serve', 'pass')
+    @output = @game.selectPlayer(@player, 'serve', 'recieved')
     @output += @game.selectPlayer(@player, 'serve', 'error')
     render json: @output, status: :ok
   end
@@ -120,7 +120,7 @@ class GamesController < ApplicationController
   def player_nonkills
     @game = Game.find(params[:gameId])
     @player = Player.find(params[:id])
-    @output = @game.selectPlayer(@player, 'spike', 'pass')
+    @output = @game.selectPlayer(@player, 'spike', 'recieved')
     @output += @game.selectPlayer(@player, 'spike', 'error')
     render json: @output, status: :ok
   end

@@ -12,7 +12,12 @@ class ActionsController < GamesController
   end
 
   def create
+    p params
+    p s_params
+
     @action = Action.new(s_params)
+    p @action
+    
     if @action.save
       render json: @action, status: :created
     else
@@ -40,6 +45,6 @@ class ActionsController < GamesController
   private
 
   def s_params
-    params.require(:new_action).permit(:game, :player, :actionType, :outcome, :start_x, :start_y, :end_x, :end_y)
+    params.require(:new_action).permit(:game_id, :player_id, :actionType, :outcome, :start_x, :start_y, :end_x, :end_y)
   end
 end
