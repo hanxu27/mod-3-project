@@ -127,7 +127,17 @@ function toggleTeamBtn() {
 }
 
 function toggleActionBtn() {
-  actionBtn.innerText = actionBtn.innerText === 'Serves' ? 'Spikes' : 'Serves'
+  switch(actionBtn.innerText) {
+    case 'Serves':
+      actionBtn.innerText = 'Passes'
+      break;
+    case 'Passes':
+      actionBtn.innerText = 'Spikes'
+      break;
+    case 'Spikes':
+      actionBtn.innerText = 'Serves'
+      break;
+  }
   renderActions()
 }
 
