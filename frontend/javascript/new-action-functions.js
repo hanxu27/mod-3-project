@@ -148,13 +148,22 @@ function renderCourt() {
   stage.add(layer)
 }
 
-function drawArrow(startX, startY, endX, endY, color='black') {
-  return new Konva.Arrow({
+function drawArrow(layer, startX, startY, endX, endY, color='black') {
+  layer.add(new Konva.Arrow({
     points: [startX, startY, endX, endY],
-    pointerLength: 10,
-    pointerWidth: 10,
+    pointerLength: 8,
+    pointerWidth: 8,
     fill: color,
     stroke: color,
-    strokeWidth: 5
-  })
+    strokeWidth: 3
+  }))
+  layer.add(new Konva.Circle({
+    // x: startX < courtMidline ? startX-6 : startX+6,
+    x: startX,
+    y: startY,
+    radius: 6,
+    // stroke: color,
+    fill: color,
+    strokeWidth: 3
+  }))
 }
