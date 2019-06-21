@@ -49,11 +49,14 @@ fetchGames()
 
 function handleClick(e) {
   // console.log('(', e.offsetX, ',', e.offsetY, ')')
-
+  
   if (e.target.tagName === 'CANVAS') handleStageClick(e)
+  else if(firstClick && !actionForm.hidden) cancelArrow()
+
   else if (e.target.id === 'toggle-action-btn') toggleActionBtn()
   else if (e.target.id === 'toggle-team-btn') toggleTeamBtn()
   else if (e.target.id === 'toggle-color-btn') toggleColorBtn()
+
   else if (e.target.id === 'new-game') newGameDiv.hidden ? showNewGameForm() : hideNewGameForm()
   else if (e.target.id === 'new-player') newPlayerDiv.hidden ? showNewPlayerForm() : hideNewPlayerForm()
   else if (e.target.id === 'player-cancel') hideNewPlayerForm()

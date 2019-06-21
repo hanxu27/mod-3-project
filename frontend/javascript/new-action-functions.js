@@ -15,14 +15,8 @@ let endY = 0
 
 function handleStageClick(e) {
   if (firstClick) {
-    // CANCELS ARROW
-    if (!actionForm.hidden) {
-      actionForm.hidden = true
-      actionForm.reset()
-      workingLayer.children[workingLayer.children.length - 1].remove()
-      stage.add(workingLayer)
-    }
-    // SETS START COORDS
+    if(!actionForm.hidden)
+      cancelArrow()
     else {
       firstClick = !firstClick
       startX = e.offsetX
@@ -38,6 +32,14 @@ function handleStageClick(e) {
     stage.add(workingLayer)
     showActionForm(e)
   }
+}
+
+function cancelArrow() {
+  actionForm.hidden = true
+  actionForm.reset()
+  console.log(workingLayer)
+  workingLayer.children[workingLayer.children.length - 1].remove()
+  stage.add(workingLayer)
 }
 
 // SHOWS FORM AT CURSOR
