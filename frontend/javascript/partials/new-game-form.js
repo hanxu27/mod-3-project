@@ -16,6 +16,7 @@ document.querySelector('Body').innerHTML += `
             <input type="date" class="form-control" id="date" required>
           </div>
         </div>
+        <br>
         <div class='row'>
           <div class="col-md-4">
             <label for="tournament">Tournament</label>
@@ -42,6 +43,6 @@ document.querySelector('Body').innerHTML += `
       <button type="submit" class="btn btn-primary btn-lg" id="form-sub">Submit</button>
       <button type="button" class="btn btn-danger btn-lg" id="form-back">Cancel</button>
     </form>
-    <hr>
+    
   </div>
 `

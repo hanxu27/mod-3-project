@@ -21,7 +21,7 @@ document.querySelector('Body').innerHTML += `
             <small class="form-text text-muted">OH, RS, S, DS, MB</small>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg" id="player-sub">Create</button>
+        <button type="submit" class="btn btn-primary btn-lg" id="player-sub">Add Player</button>
         <button type="button" class="btn btn-danger btn-lg" id="player-cancel">Cancel</button>
       </div>
     </form>

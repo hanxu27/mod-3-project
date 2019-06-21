@@ -1,5 +1,5 @@
 document.querySelector('Body').innerHTML += `
-  <footer id="footer" class="bg-light card-footer text-muted fixed-bottom">
+  <footer hidden id="footer" class="bg-light card-footer text-muted fixed-bottom">
     <!-- © Copyright 2020 Fancy Bois, LLC -->
 
     <div id="action-bar" class="row" hidden>
