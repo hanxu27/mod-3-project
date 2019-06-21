@@ -51,7 +51,7 @@ function handleClick(e) {
   // console.log('(', e.offsetX, ',', e.offsetY, ')')
   
   if (e.target.tagName === 'CANVAS') handleStageClick(e)
-  else if(firstClick && !actionForm.hidden) cancelArrow()
+  else if(firstClick && !actionForm.hidden) cancelActionForm()
 
   else if (e.target.id === 'toggle-action-btn') toggleActionBtn()
   else if (e.target.id === 'toggle-team-btn') toggleTeamBtn()

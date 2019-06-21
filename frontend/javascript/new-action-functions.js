@@ -16,7 +16,7 @@ let endY = 0
 function handleStageClick(e) {
   if (firstClick) {
     if(!actionForm.hidden)
-      cancelArrow()
+      cancelActionForm()
     else {
       firstClick = !firstClick
       startX = e.offsetX
@@ -34,10 +34,9 @@ function handleStageClick(e) {
   }
 }
 
-function cancelArrow() {
+function cancelActionForm() {
   actionForm.hidden = true
   actionForm.reset()
-  console.log(workingLayer)
   workingLayer.children[workingLayer.children.length - 1].remove()
   stage.add(workingLayer)
 }
