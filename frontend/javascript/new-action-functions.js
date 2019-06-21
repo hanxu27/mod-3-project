@@ -15,14 +15,8 @@ let endY = 0
 
 function handleStageClick(e) {
   if (firstClick) {
-    // CANCELS ARROW
-    if (!actionForm.hidden) {
-      actionForm.hidden = true
-      actionForm.reset()
-      workingLayer.children[workingLayer.children.length - 1].remove()
-      stage.add(workingLayer)
-    }
-    // SETS START COORDS
+    if(!actionForm.hidden)
+      cancelActionForm()
     else {
       firstClick = !firstClick
       startX = e.offsetX
@@ -38,6 +32,13 @@ function handleStageClick(e) {
     stage.add(workingLayer)
     showActionForm(e)
   }
+}
+
+function cancelActionForm() {
+  actionForm.hidden = true
+  actionForm.reset()
+  workingLayer.children[workingLayer.children.length - 1].remove()
+  stage.add(workingLayer)
 }
 
 // SHOWS FORM AT CURSOR
@@ -121,18 +122,18 @@ function inferActionAndOutcome() {
   // SERVE BLOCK
   if(startX < courtBoundLeft || startX > courtBoundRight) {
     actionForm.actionType.value = 'serve'
-    actionForm.outcome.value = ended_on_same_side ? 'error' : 'pass'
+    actionForm.outcome.value = ended_on_same_side ? 'error' : 'recieved'
   }
   // PASS BLOCK
   else if(ended_on_same_side) {
     actionForm.actionType.value = 'pass'
-    actionForm.outcome.value = 'pass'
+    actionForm.outcome.value = 'recieved'
   }
   // SPIKE BLOCK
   else {
     actionForm.actionType.value = 'spike'
     // actionForm.outcome.value = startX < spikeZone[0] || startX > spikeZone[1] ? 'pass' : 'point'
-    actionForm.outcome.value = 'pass'
+    actionForm.outcome.value = 'recieved'
   }
 
   // final error check

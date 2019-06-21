@@ -29,9 +29,8 @@ function createNewGame(e) {
   })
     .then(res => res.json())
     .then(game => {
-      currentGameId = game.id
-      currentTeam1 = game.team1
-      currentTeam2 = game.team2
       hideNewGameForm()
+      gameToString(game)
+      loadGameInfo(game.id, getGameTitle(game), game.team1, game.team2)
     })
 }

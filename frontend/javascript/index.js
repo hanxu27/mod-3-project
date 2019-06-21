@@ -54,6 +54,7 @@ function handleClick(e) {
   else if (e.target.id === 'toggle-action-btn') toggleActionBtn()
   else if (e.target.id === 'toggle-team-btn') toggleTeamBtn()
   else if (e.target.id === 'toggle-color-btn') toggleColorBtn()
+
   else if (e.target.id === 'new-game') newGameDiv.hidden ? showNewGameForm() : hideNewGameForm()
   else if (e.target.id === 'new-player') newPlayerDiv.hidden ? showNewPlayerForm() : hideNewPlayerForm()
   else if (e.target.id === 'player-cancel') hideNewPlayerForm()
@@ -62,42 +63,37 @@ function handleClick(e) {
 
 // FOR NAVBAR LOAD GAMES //
 function fetchGames() {
+  loadGame.innerHTML = ''
   fetch(URL_GAMES)
     .then(res => res.json())
     .then(games => games.forEach(gameToString))
 }
 
-function gameToString(game) {
-  const gameString = `${game.date} ${game.tournament} ${game.match} ${game.game} ${game.team1} vs ${game.team2}`
+function getGameTitle(game) {
+  return `${game.date} ${game.tournament} ${game.match} ${game.game} ${game.team1} vs ${game.team2}`
+}
 
+function gameToString(game) {
   let link = document.createElement('a')
   link.className = "dropdown-item"
   link.href = "#"
-  link.innerText = gameString
-
-  link.dataset.gameId = game.id
-  link.dataset.team1 = game.team1
-  link.dataset.team2 = game.team2
-  // link.dataset.toggle = 'modal'
-  // link.dataset
-
-
-  link.addEventListener('click', loadGameInfo)
+  link.innerText = getGameTitle(game)
+  link.addEventListener('click', (e)=> loadGameInfo(game.id, link.innerText, game.team1, game.team2))
   loadGame.append(link)
 }
 
-async function loadGameInfo(e) {
+function loadGameInfo(id, title, team1, team2) {
   clearCurrentGame()
-  currentGame.id = parseInt(e.target.dataset.gameId)
-  currentGame.title = e.target.innerText
-  currentGame.team1.name = e.target.dataset.team1
-  currentGame.team2.name = e.target.dataset.team2
+  currentGame.id = parseInt(id)
+  currentGame.title = title
+  currentGame.team1.name = team1
+  currentGame.team2.name = team2
   teamBtn.innerText = currentGame.team1.name
 
-  await fetchGameActions(1)
-  await fetchGameActions(2)
-  await fetchGamePlayers(1)
-  await fetchGamePlayers(2)
+  fetchGameActions(1)
+  fetchGameActions(2)
+  fetchGamePlayers(1)
+  fetchGamePlayers(2)
 
   document.querySelector('.modal-body').innerText = currentGame.title
   // $('#load-modal').modal('show')
@@ -145,10 +141,10 @@ function toggleColorBtn() {
 
 function renderActions() {
   // clears canvas
-  if (stage.children[1])
-    stage.children[1].remove()
-  if(stage.children[2])
-    stage.children[2].remove()
+  let layers = stage.children
+  const max = layers.length - 1
+  for (let k = max; k > 0; k--)
+    layers[k].remove()
 
   workingLayer = new Konva.Layer()
   let layer = new Konva.Layer()
@@ -193,7 +189,7 @@ function chooseColor(action, team_num = false, playerNumber = false, r = 0, g = 
       g + 90 > 255 ? g = 255 : g += 90
       b + 90 > 255 ? b = 255 : b += 90
     }
-    // else if (action.outcome === 'pass')
+    // else if (action.outcome === 'recieved')
     //   0 // do nothing
     // else if (action.outcome === 'error') {
     //   r = Math.round(r *= 0.85)
