@@ -49,10 +49,8 @@ fetchGames()
 
 function handleClick(e) {
   // console.log('(', e.offsetX, ',', e.offsetY, ')')
-  
-  if (e.target.tagName === 'CANVAS') handleStageClick(e)
-  else if(firstClick && !actionForm.hidden) cancelActionForm()
 
+  if (e.target.tagName === 'CANVAS') handleStageClick(e)
   else if (e.target.id === 'toggle-action-btn') toggleActionBtn()
   else if (e.target.id === 'toggle-team-btn') toggleTeamBtn()
   else if (e.target.id === 'toggle-color-btn') toggleColorBtn()
@@ -65,36 +63,31 @@ function handleClick(e) {
 
 // FOR NAVBAR LOAD GAMES //
 function fetchGames() {
+  loadGame.innerHTML = ''
   fetch(URL_GAMES)
     .then(res => res.json())
     .then(games => games.forEach(gameToString))
 }
 
-function gameToString(game) {
-  const gameString = `${game.date} ${game.tournament} ${game.match} ${game.game} ${game.team1} vs ${game.team2}`
+function getGameTitle(game) {
+  return `${game.date} ${game.tournament} ${game.match} ${game.game} ${game.team1} vs ${game.team2}`
+}
 
+function gameToString(game) {
   let link = document.createElement('a')
   link.className = "dropdown-item"
   link.href = "#"
-  link.innerText = gameString
-
-  link.dataset.gameId = game.id
-  link.dataset.team1 = game.team1
-  link.dataset.team2 = game.team2
-  // link.dataset.toggle = 'modal'
-  // link.dataset
-
-
-  link.addEventListener('click', loadGameInfo)
+  link.innerText = getGameTitle(game)
+  link.addEventListener('click', (e)=> loadGameInfo(game.id, link.innerText, game.team1, game.team2))
   loadGame.append(link)
 }
 
-function loadGameInfo(e) {
+function loadGameInfo(id, title, team1, team2) {
   clearCurrentGame()
-  currentGame.id = parseInt(e.target.dataset.gameId)
-  currentGame.title = e.target.innerText
-  currentGame.team1.name = e.target.dataset.team1
-  currentGame.team2.name = e.target.dataset.team2
+  currentGame.id = parseInt(id)
+  currentGame.title = title
+  currentGame.team1.name = team1
+  currentGame.team2.name = team2
   teamBtn.innerText = currentGame.team1.name
 
   fetchGameActions(1)
