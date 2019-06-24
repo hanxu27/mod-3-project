@@ -11,7 +11,7 @@ Action.destroy_all
 Game.destroy_all
 Player.destroy_all
 
-g1 = Game.create(team1: "United States", team2: "Germany", date: DateTime.now, tournament: 'AAU', match: 'group A', game: 1, score: '25-21')
+g1 = Game.create(team1: "United States", team2: "Germany", date: DateTime.now, tournament: 'AAU', match: 'Group A', game: 1, score: '25-21')
 
 mp1 = Player.create(name: Faker::Name.name, number: 14, team: "United States", position: 'OH')
 mp2 = Player.create(name: "Han Xu", number: 27, team: "United States", position: 'S')

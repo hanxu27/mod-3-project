@@ -8,8 +8,15 @@ function hideNewPlayerForm() {
 }
 
 function createPlayer(e) {
-  let newPlayer = { name: newPlayerForm.querySelector('#player-name').value, number: newPlayerForm.querySelector('#player-number').value, team: newPlayerForm.querySelector('#player-team').value, position: newPlayerForm.querySelector('#player-position').value }
-  console.log(newPlayer);
+  e.preventDefault()
+
+  let newPlayer = {
+    name: newPlayerForm.querySelector('#player-name').value,
+    number: newPlayerForm.querySelector('#player-number').value,
+    team: newPlayerForm.querySelector('#player-team').value,
+    position: newPlayerForm.querySelector('#player-position').value
+  }
+
   fetch(URL_PLAYERS, {
     method: 'POST',
     headers: {
@@ -17,9 +24,11 @@ function createPlayer(e) {
       Accept: 'application/json'
     },
     body: JSON.stringify({ player: newPlayer })
-  }).then(res => res.json())
-    .then(res => {
-      hideNewPlayerForm()
-      console.log(res)
-    })
+  })
+  .then(res => res.json())
+  .then(player => {
+    hideNewPlayerForm()
+    currentGame[player.team === currentGame.team1.name ? 'team1' : 'team2'].players.push(player)
+    renderActions()
+  })
 }
