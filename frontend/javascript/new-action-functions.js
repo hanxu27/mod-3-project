@@ -1,29 +1,13 @@
-// X-AXIS BOUNDS //
-const courtBoundLeft  =   50
-const courtMidline    =  525
-const courtBoundRight = 1000
-const spikeZone = [365, 685]
-// Y-AXIS BOUNDS //
-const courtBoundTop =  35
-const courtBoundBot = 515
-
-let firstClick = true
-let startX = 0
-let startY = 0
-let endX = 0
-let endY = 0
-
 function handleStageClick(e) {
   if (firstClick) {
     if(!actionForm.hidden)
-      cancelActionForm()
+      cancelNewAction()
     else {
       firstClick = !firstClick
       startX = e.offsetX
       startY = e.offsetY
     }
   }
-  // SETS END COORDS
   else {
     firstClick = !firstClick
     endX = e.offsetX
@@ -38,7 +22,7 @@ function handleStageClick(e) {
   }
 }
 
-function cancelActionForm() {
+function cancelNewAction() {
   actionForm.hidden = true
   actionForm.reset()
   stage.children[stage.children.length-1].remove()
@@ -56,8 +40,8 @@ function showActionForm(e) {
 
 function findPlayer(e) {
   e.preventDefault()
-  let temp_team = currentGame[startX<courtMidline?'team1':'team2']
-  let temp_player = temp_team.players.find(p => p.number == actionForm.number.value)
+  let team = startX < courtMidline ? 'team1' : 'team2'
+  let temp_player = currentGame[team].players.find(p => p.number == actionForm.number.value)
 
   if(!temp_player) {
     fetch(URL_PLAYERS,{
@@ -69,21 +53,21 @@ function findPlayer(e) {
       body: JSON.stringify({
         player: {
           number: actionForm.number.value,
-          team: temp_team.name
+          team: currentGame[team].name
         }
       })
     })
     .then(resp => resp.json())
     .then(player => {
-      temp_team.players.push(player)
-      createAction(player.id, temp_team)
+      currentGame[team].players.push(player)
+      createAction(player.id, team, true)
     })
   }
   else
-    createAction(temp_player.id, temp_team)
+    createAction(temp_player.id, team)
 }
 
-function createAction(id, team) {
+function createAction(id, team, newPlayer=false) {
   //remove if you want multiple new actions to show at once
   if(stage.children.length > 2)
     stage.children[stage.children.length-2].remove()
@@ -111,36 +95,38 @@ function createAction(id, team) {
   })
   .then(resp => resp.json())
   .then(action => {
+
     if(action.actionType === 'serve')
-      team.serves.push(action)
+      currentGame[team].serves.push(action)
     else if(action.actionType === 'spike')
-      team.spikes.push(action)
+      currentGame[team].spikes.push(action)
     else
-      team.passes.push(action)
+      currentGame[team].passes.push(action)
 
     actionForm.reset()
     actionForm.hidden = true
-    
+
+    if(newPlayer && colorBtn.innerText === 'Color: By Player' && teamBtn.innerText === currentGame[team].name )
+      renderActions()
   })
 }
 
-
 function inferActionAndOutcome() {
   let ended_on_same_side = (startX < courtMidline && endX < courtMidline) || (startX > courtMidline && endX > courtMidline) 
-  // SERVE BLOCK
+  // SERVES
   if(startX < courtBoundLeft || startX > courtBoundRight) {
     actionForm.actionType.value = 'serve'
     actionForm.outcome.value = ended_on_same_side ? 'error' : 'received'
   }
-  // PASS BLOCK
+  // PASSES
   else if(ended_on_same_side) {
     actionForm.actionType.value = 'pass'
     actionForm.outcome.value = 'received'
   }
-  // SPIKE BLOCK
+  // SPIKES
   else {
     actionForm.actionType.value = 'spike'
-    // actionForm.outcome.value = startX < spikeZone[0] || startX > spikeZone[1] ? 'pass' : 'point'
+    // actionForm.outcome.value = startX < spikeZone[0] || startX > spikeZone[1] ? 'received' : 'point'
     actionForm.outcome.value = 'received'
   }
 
