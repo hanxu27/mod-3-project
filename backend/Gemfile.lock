@@ -46,7 +46,6 @@ GEM
     bootsnap (1.4.4)
       msgpack (~> 1.0)
     builder (3.2.3)
-    byebug (11.0.1)
     concurrent-ruby (1.1.5)
     crass (1.0.4)
     erubi (1.8.0)
@@ -77,7 +76,7 @@ GEM
     minitest (5.11.3)
     msgpack (1.2.10)
     nio4r (2.3.1)
-    nokogiri (1.10.3)
+    nokogiri (1.10.5)
       mini_portile2 (~> 2.4.0)
     pg (1.1.4)
     puma (3.12.1)
@@ -138,7 +137,6 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap (>= 1.1.0)
-  byebug
   faker
   fast_jsonapi
   listen (>= 3.0.5, < 3.2)
